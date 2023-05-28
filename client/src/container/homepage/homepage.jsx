@@ -2,8 +2,9 @@ import React from "react";
 import classes from "./homepage.module.css";
 import Logo from "../../component/logosvg";
 import Navbar from "../../component/navbar";
+import {Button} from "antd";
 import MobileNavbar from "../../component/mobileNavbar";
-import Button from "../../component/button";
+
 import {motion} from "framer-motion";
 import Image from "../../component/image";
 const Homepage = ({intro, heading, subHeading}) => {
@@ -29,8 +30,18 @@ const Homepage = ({intro, heading, subHeading}) => {
         </div>
       </div>
       <div className={classes.button}>
-        <Button text="Start" />
-        <Button text="Sign up" />
+        <Button
+          shape="round"
+          size="large"
+          type="primary"
+          style={{backgroundColor: "#7862F2"}}
+        >
+          Start
+        </Button>
+        &nbsp;&nbsp;
+        <Button shape="round" size="large" type="default">
+          Signup
+        </Button>
       </div>
       <div className={classes.image}>
         <Image />

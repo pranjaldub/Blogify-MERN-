@@ -1,13 +1,20 @@
 import React from "react";
 import classes from "./navbar.module.css";
 import MobileNavbar from "./mobileNavbar";
-import Button from "./button";
+import {Button} from "antd";
 
 const Navbar = () => {
   return (
     <div className={classes.container}>
       <div className={classes.mobileNavbar}>
-        <Button text={"Buy now"} />
+        <Button
+          shape="round"
+          size="medium"
+          type="primary"
+          style={{backgroundColor: "#7862F2"}}
+        >
+          Buy now
+        </Button>
 
         <MobileNavbar />
       </div>
@@ -25,7 +32,14 @@ const Navbar = () => {
           <p>About</p>
         </li>
         <li>
-          <Button text={"Buy now"} />
+          <Button
+            shape="round"
+            size="medium"
+            type="primary"
+            style={{backgroundColor: "#7862F2"}}
+          >
+            Buy now
+          </Button>
         </li>
       </ul>
     </div>

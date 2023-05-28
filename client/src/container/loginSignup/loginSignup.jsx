@@ -9,12 +9,20 @@ import AccountCircle from "@mui/icons-material/PersonOutlineTwoTone";
 import BadgeTwoToneIcon from "@mui/icons-material/BadgeTwoTone";
 import VpnKeyOffTwoToneIcon from "@mui/icons-material/VpnKeyOffTwoTone";
 import InputAdornment from "@mui/material/InputAdornment";
-import {Button, Alert} from "antd";
+import {Button, Alert, ConfigProvider} from "antd";
 import {SmileOutlined} from "@ant-design/icons";
+import {useMediaQuery} from "react-responsive";
 import {Result} from "antd";
 import Checkbox from "@mui/material/Checkbox";
 import {signupUser, loginUser} from "../../service/api";
 const LoginSignup = () => {
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
+  const isBigScreen = useMediaQuery({query: "(min-width: 1824px)"});
+  const isTabletOrMobile = useMediaQuery({query: "(max-width: 1530px)"});
+  const isPortrait = useMediaQuery({query: "(orientation: portrait)"});
+  const isRetina = useMediaQuery({query: "(min-resolution: 2dppx)"});
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log("state", user);
@@ -106,10 +114,11 @@ const LoginSignup = () => {
   }
   return (
     <div className={classes.container}>
-      <div className={classes.innerContainer}>
-        <LoginSvg2 className={classes.svg} />
-        {/* =================login================= */}
-        {!user.isLoggedIn ? (
+      {!user.isLoggedIn ? (
+        <div className={classes.innerContainer}>
+          <LoginSvg2 className={classes.svg} />
+          {/* =================login================= */}
+
           <div className={classes.formContainer}>
             <div className={classes.headingContainer}>
               <div className={classes.heading}>
@@ -274,13 +283,27 @@ const LoginSignup = () => {
               </div>
             )}
           </div>
-        ) : (
+        </div>
+      ) : (
+        <ConfigProvider
+          theme={{
+            token: {
+              colorTextHeading: isTabletOrMobile ? "black" : "black",
+            },
+          }}
+        >
           <Result
-            icon={<SmileOutlined />}
+            className={classes.result}
+            icon={<SmileOutlined style={{color: "#8691F4"}} />}
             title="You're logged In!"
+            // style={{backgroundColor: "rgba(255,255,255, 1)"}}
             extra={
               <div style={{display: "flex"}}>
-                <Button shape="round" type="primary">
+                <Button
+                  shape="round"
+                  type="primary"
+                  style={{backgroundColor: "#8691F4"}}
+                >
                   Go to Home
                 </Button>
                 &nbsp;&nbsp;
@@ -297,8 +320,8 @@ const LoginSignup = () => {
               </div>
             }
           />
-        )}
-      </div>
+        </ConfigProvider>
+      )}
     </div>
   );
 };

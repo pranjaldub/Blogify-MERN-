@@ -12,7 +12,7 @@
         ". text image"
         ". button image";
         gap:1em;
-        background-image: linear-gradient(to right top, #fdfcfd, #f7f1fa, #eee6f9, #e2ddf9, #d2d4f9);
+        background-image: linear-gradient(110deg, #fdfcfd 40%, #a7aaee 40%);
     
 
 }
@@ -106,7 +106,8 @@
             "logo nav nav nav"
             ". text text ."
             ". button button .";
-            gap:0.5em
+            gap:0.5em;
+            background-image: linear-gradient(130deg, #fdfcfd 30%, #f7f1fa, #d5bef8, #b6a8f2, #a7aaee);
 
     }
 
@@ -132,7 +133,8 @@
             "logo logo nav nav"
             ". text  ."
             ". button .";
-            gap:1em
+            gap:1em;
+            background-image: linear-gradient(130deg, #fdfcfd 30%, #f7f1fa, #d5bef8, #b6a8f2, #a7aaee);
 
     }
 
