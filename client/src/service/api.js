@@ -59,6 +59,8 @@ export const loginUser = async (credentials) => {
       };
     }
 
+    sessionStorage.setItem("accessToken", `Bearer ${resp.accessToken}`);
+    sessionStorage.setItem("refreshToken", `Bearer ${resp.refreshToken}`);
     return {
       isSuccess: true,
       message: "login successful",
