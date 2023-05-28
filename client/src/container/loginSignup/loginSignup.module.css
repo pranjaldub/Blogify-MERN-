@@ -110,7 +110,7 @@ align-items:center;
       
     }
     .container{
-        background: linear-gradient(0deg, #b6b2f2 50%, #1c193d 50%);
+        background: linear-gradient(40deg, #b6b2f2 50%, #1c193d 50%);
     }
     .formContainer{
         display:absolute;
@@ -120,6 +120,12 @@ align-items:center;
         background-color: white;
         border-radius: 10%;
         width: auto;
+    }
+    .innerContainer{
+        justify-content: left;
+        background: linear-gradient(70deg, #8691f4 10%, #1c193d 10%);
+       
+       
     }
     
     
