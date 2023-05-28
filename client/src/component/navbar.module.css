@@ -1,0 +1,56 @@
+ul {
+    list-style-type: none;
+   
+  }
+  ul li p{
+    font-weight: light;
+    cursor: pointer;
+  }
+  ul li  :hover {
+    color: "#765FF2";
+    
+  }
+
+  .navlist{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: auto;
+   
+  }
+  
+li{
+    padding:1em;
+   
+}
+
+  .container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .mobileNavbar{
+    display:none
+  }
+
+  li a {
+    color: black;
+    text-decoration: none;
+    font-family:Georgia;
+  }
+
+  @media screen and (max-width:768px) {
+
+    li{
+        display:none
+    }
+    .mobileNavbar{
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+    
+  }

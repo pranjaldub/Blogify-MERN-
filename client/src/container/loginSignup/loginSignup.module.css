@@ -1,0 +1,108 @@
+.container{
+    height: 100vh;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right top, #fdfcfd, #f7f1fa, #eee6f9, #e2ddf9, #d2d4f9);
+    
+   
+}
+.innerContainer{
+    height: 75%;
+width: 80%;
+display: flex;
+justify-content: center;
+    align-items: center;
+    position: relative;
+    background-image: linear-gradient(to right top, #fdfcfd, #f7f1fa, #eee6f9, #e2ddf9, #d2d4f9);
+    border-radius: 2em;
+    
+}
+   
+    
+
+
+.svg{
+    width:100%;
+    height: 100%;
+    position: static;
+    padding:1em
+  
+}
+.formContainer{
+    
+height: 100%;
+width: 50%;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items:center;
+    align-items: center;
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 0 3px 8px rgb(0 0 0 / 0.2);
+    padding: 1em;
+    position: relative;
+    
+}
+
+.textContainer{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    
+}
+.helper{
+    width: 100%;
+    display:flex;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+    padding-bottom: 1em;
+    
+}
+
+.loginIconContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.loginIcon{
+    padding-top: 1em;
+}
+
+.registerText{
+    color:#765EF3;
+    cursor: pointer;
+}
+.heading{
+    font-family: Montserrat;
+    font-weight: bolder;
+    padding-bottom: 1em;
+    font-size: large;
+}
+.subHeading{
+    font-family: Montserrat;
+    font-weight: lighter;
+    font-size: small;
+}
+
+/* .inputRounded .MuiOutlinedInput-root{
+    border-radius: 50%;
+ } */
+
+@media screen and (max-width:1530px) {
+
+    .svg{
+       display: none;
+      
+    }
+    .formContainer{
+        display:absolute;
+        width: 30em;
+    }
+    
+}

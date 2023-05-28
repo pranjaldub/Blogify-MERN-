@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Homepage from "./container/homepage/homepage";
+import LoginSignup from "./container/loginSignup/loginSignup";
 
 function App() {
+  const intro = "Introducing Blogify";
+  const heading = "Express the meaning of your blogs differently";
+  const subHeading =
+    "Our rewriting tool alters the syntax, structure, word/phrase arrangement, and incorporates relevant synonyms. This tool is compatible with all major languages, including English, German, Spanish, French, Arabic, Chinese, and many others.";
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Homepage intro={intro} heading={heading} subHeading={subHeading} />
+      <LoginSignup />
     </div>
   );
 }

@@ -1,0 +1,143 @@
+.container {
+
+    background-color: antiquewhite;
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.3fr 0.8fr 1fr;
+    text-align: center;
+    grid-template-rows: 0.1fr 0.5fr 0.5fr;
+    grid-template-areas:
+        "logo . nav"
+        ". text image"
+        ". button image";
+        gap:1em;
+        background-image: linear-gradient(to right top, #fdfcfd, #f7f1fa, #eee6f9, #e2ddf9, #d2d4f9);
+    
+
+}
+
+.space {
+    background-color: white;
+    grid-area: space;
+}
+
+.logo {
+    /* background-color: aqua; */
+    grid-area: logo;
+    position: relative;
+    
+}
+
+.image {
+    
+    grid-area: image;
+}
+
+.nav {
+    
+    grid-area: nav;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.text {
+ 
+    grid-area: text;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+}
+
+.textContainer{
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.subHeading{
+    font-weight: lighter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-family: 'Montserrat';
+    padding:0.5em;
+    font-weight: bold;
+   
+    
+}
+.intro{
+    font-weight: lighter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button {
+    
+   display:inline-block;
+    grid-area: button;
+    align-items: start;
+   
+    
+}
+
+
+
+/* tablet */
+@media only screen and (max-width: 1280px) {
+    .container {
+
+        background-color: antiquewhite;
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 0.2fr 0.6fr 0.6fr 0.3fr;
+        text-align: center;
+        grid-template-rows: 0.2fr 0.5fr 0.3fr;
+        grid-template-areas:
+            "logo nav nav nav"
+            ". text text ."
+            ". button button .";
+            gap:0.5em
+
+    }
+
+    .image {
+        display: none;
+    }
+
+   
+}
+
+/* mobile */
+@media only screen and (max-width: 768px) {
+    .container {
+
+        background-color: antiquewhite;
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 0.15fr 0.1fr 1fr 0.1fr;
+        text-align: center;
+        grid-template-rows: 0.1fr 0.7fr 0.3fr;
+        grid-template-areas:
+            "logo logo nav nav"
+            ". text  ."
+            ". button .";
+            gap:1em
+
+    }
+
+    .image {
+        display: none;
+    }
+
+}
