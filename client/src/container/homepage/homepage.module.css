@@ -8,11 +8,13 @@
     text-align: center;
     grid-template-rows: 0.1fr 0.5fr 0.5fr;
     grid-template-areas:
-        "logo . nav"
+        ". . nav"
         ". text image"
         ". button image";
         gap:1em;
         background-image: linear-gradient(110deg, #fdfcfd 40%, #a7aaee 40%);
+     z-index: 1000;
+     
     
 
 }
@@ -25,7 +27,8 @@
 .logo {
     /* background-color: aqua; */
     grid-area: logo;
-    position: relative;
+    position: static;
+   
     
 }
 
@@ -38,7 +41,14 @@
     
     grid-area: nav;
     display:flex;
-    justify-content: flex-end;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    padding-left: 1em;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px) saturate(160%) contrast(45%) brightness(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%) contrast(45%) brightness(140%);
+    z-index: 2000;
 }
 
 .text {

@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ReorderIcon from "@mui/icons-material/Reorder";
+import {MenuOutlined} from "@ant-design/icons";
 import classes from "./mobileNavbar.module.css";
 export default function MobileNavbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -28,7 +29,7 @@ export default function MobileNavbar() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <ReorderIcon id="menuIcon" className={classes.menuIcon} />
+        <MenuOutlined id="menuIcon" className={classes.menuIcon} />
       </Button>
       <Menu
         id="demo-positioned-menu"
@@ -45,9 +46,9 @@ export default function MobileNavbar() {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>Home</MenuItem>
+        <MenuItem onClick={handleClose}>Blogs</MenuItem>
+        <MenuItem onClick={handleClose}>About</MenuItem>
       </Menu>
     </div>
   );

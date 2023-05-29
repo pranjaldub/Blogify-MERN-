@@ -15,7 +15,9 @@ import {useMediaQuery} from "react-responsive";
 import {Result} from "antd";
 import Checkbox from "@mui/material/Checkbox";
 import {signupUser, loginUser} from "../../service/api";
+import {useNavigate} from "react-router-dom";
 const LoginSignup = () => {
+  const navigate = useNavigate();
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -91,6 +93,7 @@ const LoginSignup = () => {
         setSuccess({success: true, message: "successfully logged in"});
         setSignupValues(initialSignupValues);
         setLoginValues(initialLoginValues);
+        navigate("/");
       }
     } else {
       account === "signup"
@@ -234,6 +237,7 @@ const LoginSignup = () => {
               <Button
                 shape="round"
                 type="default"
+                size="large"
                 loading={account === "login" ? loadings[0] : loadings[1]}
                 onClick={() => {
                   enterLoading(account === "login" ? 0 : 1);
@@ -245,20 +249,17 @@ const LoginSignup = () => {
             </div>
 
             <div className={classes.loginIconContainer}>
-              {`or ${account} with`}
+              {/* {`or ${account} with`} */}
               <div className={classes.loginIcon}>
-                <span>
-                  {" "}
-                  <AccountCircle />
-                </span>
-                <span>
-                  {" "}
-                  <AccountCircle />
-                </span>
-                <span>
-                  {" "}
-                  <AccountCircle />
-                </span>
+                <Button
+                  shape="round"
+                  type="primary"
+                  size="large"
+                  style={{backgroundColor: "#8691F4"}}
+                  onClick={() => navigate("/")}
+                >
+                  Go to Home
+                </Button>
               </div>
             </div>
 
@@ -302,6 +303,7 @@ const LoginSignup = () => {
                 <Button
                   shape="round"
                   type="primary"
+                  size="large"
                   style={{backgroundColor: "#8691F4"}}
                 >
                   Go to Home
@@ -310,6 +312,7 @@ const LoginSignup = () => {
                 <Button
                   shape="round"
                   type="default"
+                  size="large"
                   onClick={() => {
                     dispatch(logout());
                     setSuccess({success: false, message: ""});

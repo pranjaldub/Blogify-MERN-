@@ -1,0 +1,17 @@
+.container{
+    padding:1em;
+   display: flex;
+   flex-direction: row;
+    background-color: aqua;
+    height: 35vh;
+    width: 100%;
+    
+}
+.image{
+    background-color: aquamarine;
+    height: 100%;
+}
+.body{
+    background-color: rgb(31, 191, 138);
+    height: 100%;
+}

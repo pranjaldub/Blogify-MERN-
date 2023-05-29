@@ -31,6 +31,7 @@ li{
     justify-content: center;
     align-items: center;
     height: 100%;
+    
   }
   .mobileNavbar{
     display:none
@@ -51,6 +52,7 @@ li{
         display:flex;
         flex-direction: row;
         justify-content: flex-end;
+        padding: 1em 0em 1em 0em;
       }
     
   }
