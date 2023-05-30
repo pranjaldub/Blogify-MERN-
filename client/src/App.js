@@ -8,6 +8,8 @@ import {BrowserRouter, Routes, Route, Outlet, Navigate} from "react-router-dom";
 import classes from "./container/homepage/homepage.module.css";
 import Navbar from "./component/navbar";
 import Logo from "./component/logosvg";
+import Editor from "./component/editor/mobileEditor";
+import CreateBlog from "./container/createBlog/createBlog";
 function App() {
   const user = useSelector((state) => state.user);
   const PrivateRoute = ({...props}) => {
@@ -43,6 +45,9 @@ function App() {
           <Route path="/login" element={<LoginSignup />} />
           <Route path="/blogs" element={<PrivateRoute />}>
             <Route path="/blogs" element={<Blogs />} />
+          </Route>
+          <Route path="/createBlog" element={<PrivateRoute />}>
+            <Route path="/createBlog" element={<CreateBlog />} />
           </Route>
         </Routes>
       </div>

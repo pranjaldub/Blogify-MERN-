@@ -7,6 +7,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding:1em
     
 }
 .trendingContainer{
@@ -20,6 +21,7 @@
     width: 85%;
     padding-top: 1em;
     margin-top: 2em;
+   
 }
 
 .blogs{
@@ -29,5 +31,36 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2em;
+    gap: 1em;
+}
+
+.heading{
+   font-size: 5em;
+   font-weight: lighter;
+    -webkit-text-stroke-width: 2px;
+    -moz-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #111827;
+    -moz-text-stroke-color: #111827;
+    color: transparent;
+    text-shadow: 6px 6px #8668cb;
+      
+}
+
+.headingContainer{
+  
+    width: 100%;
+    height: auto;
+    padding-bottom: 2em;
+    font-family: Poppins;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3em;
+}
+.blogsList{
+    padding-top: 1em;
+    margin-top: 2em;
+    width: 100%;
 }

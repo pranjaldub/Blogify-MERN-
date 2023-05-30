@@ -36,6 +36,7 @@ export default function TabComponent() {
         allowScrollButtonsMobile
         aria-label="scrollable force tabs example"
         sx={{paddingBottom: 2}}
+        size="small"
       >
         <Tab label="Technology" />
         <Tab label="Life" />
