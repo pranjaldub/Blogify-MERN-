@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import {Avatar, Card} from "antd";
 const {Meta} = Card;
-const BlogCard = () => (
+const BlogCard = ({blogText}) => (
   <Card
     hoverable
     style={{
@@ -30,7 +30,7 @@ const BlogCard = () => (
   >
     <Meta
       title="The effect of AI on non technical sector"
-      description="This is the description The effect of AI on non technical sector The effect of AI on non technical sector ..."
+      description={blogText}
       style={{textOverflow: "ellipses"}}
     />
   </Card>

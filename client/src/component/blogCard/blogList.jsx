@@ -7,7 +7,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function BlogList() {
+export default function BlogList({blogText}) {
   return (
     <ListItem
       alignItems="center"
@@ -18,11 +18,7 @@ export default function BlogList() {
       </ListItemAvatar>
       <ListItemText
         primary="The growth of AI in non technical sectors"
-        secondary={
-          <React.Fragment>
-            {"I'll be in your neighborhood doing errands this…"}
-          </React.Fragment>
-        }
+        secondary={<React.Fragment>{blogText}</React.Fragment>}
       />
     </ListItem>
   );

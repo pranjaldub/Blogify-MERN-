@@ -1,10 +1,13 @@
 //Here we create the api to be used in route file endpoints
 
 import User from "../model/User.js";
+import Blogs from "../model/Blogs.js";
 import Token from "../model/Token.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import {v4 as uuidv4} from "uuid";
+
 dotenv.config({path: "../local.env"});
 export const signupUser = async (req, res) => {
   try {
@@ -82,5 +85,66 @@ export const loginUser = async (req, res) => {
     return res
       .status(400)
       .json({msg: "login not successful , maybe connection problem"});
+  }
+};
+
+export const createBlogs = async (req, res) => {
+  try {
+    const blog = req.body; //req = {username:"..." , blog:"..."}
+
+    const foundUser = await Blogs.findOne({name: blog.username});
+    //user already exists
+    if (foundUser) {
+      //update existing field
+      //foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+      await Blogs.updateOne(
+        {name: blog.username},
+        {$set: {blogs: [...foundUser.blogs, {id: uuidv4(), blog: blog.blog}]}}
+      );
+      return res.status(200).json({msg: "Blog submitted"});
+    } else {
+      const blogObject = {
+        name: blog.username,
+        blogs: [{id: uuidv4(), blog: blog.blog}],
+      };
+
+      console.log(blogObject);
+
+      await Blogs.create(blogObject);
+      return res.status(200).json({msg: "Blog submitted"});
+    }
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not submitted"});
+  }
+};
+
+export const getBlogs = async (req, res) => {
+  try {
+    // const blog = req.body; //req = {username:"..." , blog:"..."}
+
+    // const foundUser = await Blogs.findOne({username: blog.username});
+    // //user already exists
+    // if (foundUser) {
+    //   //update existing field
+    //   foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+    // } else {
+    //   const blogObject = {
+    //     name: blog.username,
+    //     blogs: [{id: uuidv4(), blog: blog.blog}],
+    //   };
+
+    //   console.log(blogObject);
+
+    //   await Blogs.create(blogObject);
+    try {
+      const data = await Blogs.find({});
+      res.status(200).send({msg: "fetching successful", data: data});
+    } catch (err) {
+      return res.status(500).json({msg: "blog not submitted"});
+    }
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not submitted"});
   }
 };

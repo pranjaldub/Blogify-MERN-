@@ -4,10 +4,12 @@ import Tab from "../../component/tab/tab";
 import TrendingCard from "../../component/trendingCard";
 import classes from "./blogs.module.css";
 import Pagination from "@mui/material/Pagination";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useMediaQuery} from "react-responsive";
+import {getBlogs} from "../../service/api";
 import List from "@mui/material/List";
 const Blogs = () => {
+  const [blogs, setBlogs] = useState([]);
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -16,6 +18,14 @@ const Blogs = () => {
   const isTablet = useMediaQuery({query: "(max-width: 1280px)"});
   const isPortrait = useMediaQuery({query: "(orientation: portrait)"});
   const isRetina = useMediaQuery({query: "(min-resolution: 2dppx)"});
+  async function fetchBlogs() {
+    const data = await getBlogs();
+    console.log(data);
+    setBlogs(data.data[0].blogs);
+  }
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
   return (
     <div className={classes.container}>
       <div className={classes.headingContainer}>
@@ -31,16 +41,16 @@ const Blogs = () => {
         </div>
         {!isMobile ? (
           <div className={classes.blogs}>
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
+            {blogs.map((item, id) => (
+              <BlogCard blogText={item.blog} key={id} />
+            ))}
           </div>
         ) : (
           <div className={classes.blogsList}>
             <List sx={{width: "100%"}}>
-              <BlogListItem />
-              <BlogListItem />
-              <BlogListItem />
+              {blogs.map((item, id) => (
+                <BlogListItem blogText={item.blog} key={id} />
+              ))}
             </List>
           </div>
         )}
