@@ -8,6 +8,7 @@ import React, {useEffect, useState} from "react";
 import {useMediaQuery} from "react-responsive";
 import {getBlogs} from "../../service/api";
 import List from "@mui/material/List";
+import {MantineProvider} from "@mantine/core";
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const isDesktopOrLaptop = useMediaQuery({
@@ -33,7 +34,9 @@ const Blogs = () => {
         <h1>you wanted to read about technology.</h1>
       </div>
       <div className={classes.trendingContainer}>
-        <TrendingCard />
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <TrendingCard />
+        </MantineProvider>
       </div>
       <div className={classes.blogsContainer}>
         <div className={classes.tab}>
@@ -41,9 +44,11 @@ const Blogs = () => {
         </div>
         {!isMobile ? (
           <div className={classes.blogs}>
-            {blogs.map((item, id) => (
-              <BlogCard blogText={item.blog} key={id} />
-            ))}
+            <MantineProvider withGlobalStyles withNormalizeCSS>
+              {blogs.map((item, id) => (
+                <BlogCard blogText={item.blog} key={id} />
+              ))}
+            </MantineProvider>
           </div>
         ) : (
           <div className={classes.blogsList}>
