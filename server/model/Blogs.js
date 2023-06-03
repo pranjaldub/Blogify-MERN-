@@ -15,8 +15,15 @@ const blogsSchema = mongoose.Schema({
         required: true,
       },
       blog: {
-        type: String,
-        required: true,
+        heading: {
+          type: String,
+        },
+        description: {
+          type: String,
+        },
+        content: {
+          type: String,
+        },
       },
     },
   ],

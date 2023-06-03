@@ -59,7 +59,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const BlogCard = ({blogText}) => {
+const BlogCard = ({blog}) => {
   // <Card
   //   hoverable
   //   style={{
@@ -112,11 +112,11 @@ const BlogCard = ({blogText}) => {
       </Badge> */}
 
       <Text className={classes.title} fw={500} component="a">
-        {title}
+        {blog.heading}
       </Text>
 
       <Text fz="sm" color="dimmed" lineClamp={4}>
-        {description}
+        {blog.description}
       </Text>
 
       <Group position="apart" className={classes.footer}>

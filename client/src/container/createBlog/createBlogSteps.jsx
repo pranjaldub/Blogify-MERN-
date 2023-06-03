@@ -2,23 +2,33 @@ import {Steps, theme} from "antd";
 import {useState} from "react";
 import CreateBlog from "./createBlog";
 import {Button, message, Popconfirm} from "antd";
-const steps = [
-  {
-    title: "First",
-    content: "first",
-  },
-  {
-    title: "Second",
-    content: "Second-content",
-  },
-  {
-    title: "Last",
-    content: <CreateBlog />,
-  },
-];
+import InputHeading from "../../component/input/inputHeading";
+import InputDescription from "../../component/input/inputDescription";
+import {createBlog} from "../../service/api";
+import {useSelector, useDispatch} from "react-redux";
+import {Center} from "@mantine/core";
+
+//import { set } from "mongoose";
+
 const CreateBlogSteps = () => {
+  const user = useSelector((state) => state.user);
+  const [blog, setBlog] = useState({heading: "", description: "", content: ""});
   const {token} = theme.useToken();
   const [current, setCurrent] = useState(0);
+  const steps = [
+    {
+      title: "Heading",
+      content: <InputHeading blog={blog} setBlog={setBlog} />,
+    },
+    {
+      title: "Description",
+      content: <InputDescription blog={blog} setBlog={setBlog} />,
+    },
+    {
+      title: "Last",
+      content: <CreateBlog blog={blog} setBlog={setBlog} />,
+    },
+  ];
   const next = () => {
     setCurrent(current + 1);
   };
@@ -41,16 +51,19 @@ const CreateBlogSteps = () => {
   const contentStyle = {
     //lineHeight: "260px",
     textAlign: "center",
-    color: token.colorTextTertiary,
-    backgroundColor: token.colorFillAlter,
+    //display: "flex",
+    //color: token.colorTextTertiary,
+    // backgroundColor: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    border: `1px dashed ${token.colorBorder}`,
+    //border: `1px dashed ${token.colorBorder}`,
     marginTop: 16,
+
     display: "flex",
+    position: "relative",
     justifyContent: "space-around",
   };
   return (
-    <>
+    <div style={{height: "auto"}}>
       <Steps
         current={current}
         items={items}
@@ -65,20 +78,30 @@ const CreateBlogSteps = () => {
       <div style={contentStyle}>{steps[current].content}</div>
       <div
         style={{
-          marginTop: 24,
+          marginTop: 10,
+
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={() => next()}
+          >
             Next
           </Button>
         )}
         {current === steps.length - 1 && (
           <Button
+            shape="round"
+            size="large"
             type="primary"
-            onClick={() => message.success("Processing complete!")}
+            onClick={() => createBlog({username: user.username, blog: blog})}
           >
-            Done
+            Submit
           </Button>
         )}
         {current > 0 && (
@@ -95,13 +118,15 @@ const CreateBlogSteps = () => {
                 margin: "0 8px",
               }}
               // onClick={() => prev()}
+              shape="round"
+              size="large"
             >
               Previous
             </Button>
           </Popconfirm>
         )}
       </div>
-    </>
+    </div>
   );
 };
 export default CreateBlogSteps;

@@ -11,6 +11,7 @@ import Logo from "./component/logosvg";
 import Editor from "./component/editor/mobileEditor";
 import CreateBlog from "./container/createBlog/createBlog";
 import CreateBlogSteps from "./container/createBlog/createBlogSteps";
+
 function App() {
   const user = useSelector((state) => state.user);
   const PrivateRoute = ({...props}) => {

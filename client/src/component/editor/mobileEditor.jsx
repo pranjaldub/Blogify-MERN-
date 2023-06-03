@@ -32,8 +32,15 @@ function MobileTextEditor({setBlog, blog}) {
   return (
     <ReactQuill
       theme="snow"
-      value={blog}
-      onChange={setBlog}
+      value={blog.content}
+      onChange={(text) => {
+        console.log(text);
+        setBlog((prevState) => ({
+          ...prevState,
+          content: text,
+        }));
+      }}
+      style={{height: "100%", width: "100%"}}
       modules={modules}
       formats={formats}
     />

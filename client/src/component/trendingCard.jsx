@@ -11,8 +11,8 @@
 // import SkipNextIcon from "@mui/icons-material/SkipNext";
 // import classes from "./trendingCard.module.css";
 // import {useMediaQuery} from "react-responsive";
-import FaceIcon from "@mui/icons-material/Face";
-import {Chip} from "@mui/material";
+import {Chip} from "ui-neumorphism";
+import "ui-neumorphism/dist/index.css";
 // const TrendingCard = () => {
 //   const theme = useTheme();
 //   const isDesktopOrLaptop = useMediaQuery({
@@ -188,7 +188,11 @@ const TrendingCard = () => {
   return (
     <div className={classes.wrapper} style={{borderRadius: 15}}>
       <div className={classes.body}>
-        <Text fw={700} fz="lg" mb={5}>
+        <Chip type="error" className="ma-3">
+          Artificial Intelligence
+        </Chip>
+
+        <Text fw={700} fz="lg" mb={5} mt={5}>
           {title}
         </Text>
         <Text fz="sm" c="dimmed">

@@ -91,7 +91,7 @@ export const loginUser = async (req, res) => {
 export const createBlogs = async (req, res) => {
   try {
     const blog = req.body; //req = {username:"..." , blog:"..."}
-
+    console.log("blog", blog);
     const foundUser = await Blogs.findOne({name: blog.username});
     //user already exists
     if (foundUser) {
@@ -99,13 +99,28 @@ export const createBlogs = async (req, res) => {
       //foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
       await Blogs.updateOne(
         {name: blog.username},
-        {$set: {blogs: [...foundUser.blogs, {id: uuidv4(), blog: blog.blog}]}}
+        {
+          $set: {
+            blogs: [
+              ...foundUser.blogs,
+              {
+                id: uuidv4(),
+                blog: blog.blog,
+              },
+            ],
+          },
+        }
       );
       return res.status(200).json({msg: "Blog submitted"});
     } else {
       const blogObject = {
         name: blog.username,
-        blogs: [{id: uuidv4(), blog: blog.blog}],
+        blogs: [
+          {
+            id: uuidv4(),
+            blog: blog.blog,
+          },
+        ],
       };
 
       console.log(blogObject);

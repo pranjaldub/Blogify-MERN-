@@ -75,15 +75,13 @@ export const loginUser = async (credentials) => {
 };
 
 export const createBlog = async (blog) => {
+  console.log("api", blog);
   try {
     //console.log("sending", credentials);
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        username: blog.username,
-        blog: blog.blog,
-      }),
+      body: JSON.stringify(blog),
     };
     //debugger;
     const response = await fetch(`${baseUrl}/createBlogs`, requestOptions);

@@ -46,7 +46,7 @@ const Blogs = () => {
           <div className={classes.blogs}>
             <MantineProvider withGlobalStyles withNormalizeCSS>
               {blogs.map((item, id) => (
-                <BlogCard blogText={item.blog} key={id} />
+                <BlogCard blog={item.blog} key={id} />
               ))}
             </MantineProvider>
           </div>
@@ -54,7 +54,7 @@ const Blogs = () => {
           <div className={classes.blogsList}>
             <List sx={{width: "100%"}}>
               {blogs.map((item, id) => (
-                <BlogListItem blogText={item.blog} key={id} />
+                <BlogListItem blog={item.blog} key={id} />
               ))}
             </List>
           </div>
