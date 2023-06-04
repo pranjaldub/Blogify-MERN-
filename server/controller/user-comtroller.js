@@ -163,3 +163,24 @@ export const getBlogs = async (req, res) => {
     return res.status(500).json({msg: "blog not submitted"});
   }
 };
+
+export const getBlogsById = async (req, res) => {
+  try {
+    const blogId = req.params.id; //localhost:8000/blogs/1a
+
+    try {
+      const data = await Blogs.find({blogs: {$elemMatch: {id: blogId}}});
+      var arr = [];
+      data.map((user) => {
+        arr.push(...user.blogs.filter((blog) => blog.id === blogId));
+      });
+      res.status(200).send({msg: "blog fetched successfully", data: arr});
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({msg: "blog not found"});
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({msg: "blog not found"});
+  }
+};

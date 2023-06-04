@@ -137,3 +137,36 @@ export const getBlogs = async () => {
     return {isSuccess: false, error: "Response failure , an error has occured"};
   }
 };
+
+export const getBlogsById = async (blogId) => {
+  try {
+    //console.log("sending", credentials);
+    const requestOptions = {
+      method: "GET",
+      headers: {"Content-Type": "application/json"},
+      // body: JSON.stringify({
+      //   username: blog.username,
+      //   blog: blog.blog,
+      // }),
+    };
+    //debugger;
+    const response = await fetch(`${baseUrl}/blogs/${blogId}`, requestOptions);
+    //console.log("incoming", response);
+
+    const resp = await response.json();
+    console.log("resp ", resp);
+    if (response.status !== 200) {
+      //console.log("inside if");
+      return {
+        isSuccess: false,
+        msg: "failed",
+      };
+    }
+
+    return {isSuccess: true, message: "blog fetch successful", data: resp.data};
+  } catch (err) {
+    //throw err;
+    //console.log(err);
+    return {isSuccess: false, error: "Response failure , an error has occured"};
+  }
+};
