@@ -18,7 +18,7 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-
+import {useNavigate} from "react-router-dom";
 const useStyles = createStyles((theme) => ({
   card: {
     position: "relative",
@@ -59,7 +59,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const BlogCard = ({blog}) => {
+const BlogCard = ({blog, author, blogId}) => {
+  const navigate = useNavigate();
+  console.log("author", author);
   // <Card
   //   hoverable
   //   style={{
@@ -96,7 +98,12 @@ const BlogCard = ({blog}) => {
   const description =
     "Write great English with the ultimate tool for writing, in your favorite websites such as Facebook, Gmail, LinkedIn and more. While you're typing, a small Ginger logo will appear at the bottom right corner of your text fields. This tool will take care of all your writing needs.";
   return (
-    <Card withBorder radius="lg" className={cx(classes.card)}>
+    <Card
+      withBorder
+      radius="lg"
+      className={cx(classes.card)}
+      onClick={() => navigate(`/blogs/${blogId}`)}
+    >
       <Card.Section>
         <a>
           <Image src={image} height={180} />
@@ -123,7 +130,7 @@ const BlogCard = ({blog}) => {
         <Center>
           <Avatar src={image} size={24} radius="xl" mr="xs" />
           <Text fz="sm" inline>
-            Pranjal
+            {author}
           </Text>
         </Center>
 

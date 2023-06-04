@@ -8,6 +8,50 @@ import {
   rem,
 } from "@mantine/core";
 import image from "../svg/one.svg";
+import InputCategory from "./inputCategory";
+import {DownOutlined} from "@ant-design/icons";
+import {Dropdown, message, Space} from "antd";
+
+// const InputCategory = () => {
+//   const onClick = (e) => {
+//     console.log(e.domEvent.target.innerText);
+
+//     setBlog((prevState) => ({
+//       ...prevState,
+//       category: e.domEvent.target.innerText,
+//     }));
+//   };
+//   const items = [
+//     {
+//       label: "Technology",
+//       key: "1",
+//     },
+//     {
+//       label: "Life",
+//       key: "2",
+//     },
+//     {
+//       label: "Education",
+//       key: "3",
+//     },
+//   ];
+//   return (
+//     <Dropdown
+//       menu={{
+//         items,
+//         onClick,
+//       }}
+//     >
+//       <a onClick={(e) => e.preventDefault()}>
+//         <Space>
+//           {blog.category ? `${blog.category}` : "Hover me, Click menu item"}
+//           <DownOutlined />
+//         </Space>
+//       </a>
+//     </Dropdown>
+//   );
+// };
+// //export default InputCategory;
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -76,6 +120,28 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function InputHeading({blog, setBlog}) {
+  const onClick = (e) => {
+    console.log(e.domEvent.target.innerText);
+
+    setBlog((prevState) => ({
+      ...prevState,
+      category: e.domEvent.target.innerText,
+    }));
+  };
+  const items = [
+    {
+      label: "Technology",
+      key: "1",
+    },
+    {
+      label: "Life",
+      key: "2",
+    },
+    {
+      label: "Education",
+      key: "3",
+    },
+  ];
   const {classes} = useStyles();
   return (
     <div className={classes.wrapper}>
@@ -99,6 +165,21 @@ export default function InputHeading({blog, setBlog}) {
             }}
             value={blog.heading}
           />
+        </div>
+        <div className={classes.controls}>
+          <Dropdown
+            menu={{
+              items,
+              onClick,
+            }}
+          >
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+                {blog.category ? `${blog.category}` : "Choose category"}
+                <DownOutlined />
+              </Space>
+            </a>
+          </Dropdown>
         </div>
       </div>
       <Image src={image} className={classes.image} />

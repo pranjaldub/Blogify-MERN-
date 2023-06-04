@@ -10,6 +10,7 @@ import Navbar from "./component/navbar";
 import Logo from "./component/logosvg";
 import Editor from "./component/editor/mobileEditor";
 import CreateBlog from "./container/createBlog/createBlog";
+import Blog from "./container/blog/blog";
 import CreateBlogSteps from "./container/createBlog/createBlogSteps";
 
 function App() {
@@ -45,9 +46,11 @@ function App() {
             }
           />
           <Route path="/login" element={<LoginSignup />} />
-          <Route path="/blogs" element={<PrivateRoute />}>
-            <Route path="/blogs" element={<Blogs />} />
-          </Route>
+
+          <Route path="/blogs" element={<Blogs />} />
+
+          <Route path="blogs/:blogId" element={<Blog />} />
+
           <Route path="/createBlog" element={<PrivateRoute />}>
             <Route path="/createBlog" element={<CreateBlogSteps />} />
           </Route>

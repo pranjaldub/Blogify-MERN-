@@ -5,6 +5,7 @@ import {Button} from "antd";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {logout} from "../features/user/userSlice";
+import {PlusOutlined} from "@ant-design/icons";
 const Navbar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -37,10 +38,10 @@ const Navbar = () => {
         <MobileNavbar />
       </div>
       <ul className={classes.navlist}>
-        <li>
+        <li onClick={() => navigate("/")}>
           <p>Home</p>
         </li>
-        <li>
+        <li onClick={() => navigate("/blogs")}>
           <p>Blogs</p>
         </li>
 
@@ -59,15 +60,27 @@ const Navbar = () => {
               login
             </Button>
           ) : (
-            <Button
-              shape="round"
-              size="medium"
-              type="primary"
-              style={{backgroundColor: "#7862F2"}}
-              onClick={() => dispatch(logout())}
-            >
-              logout
-            </Button>
+            <>
+              <Button
+                shape="round"
+                size="medium"
+                type="primary"
+                style={{backgroundColor: "#7862F2"}}
+                onClick={() => navigate("/createBlog")}
+              >
+                Create <PlusOutlined />
+              </Button>
+              &nbsp; &nbsp;
+              <Button
+                shape="round"
+                size="medium"
+                type="default"
+                style={{color: "#7862F2"}}
+                onClick={() => dispatch(logout())}
+              >
+                Logout
+              </Button>
+            </>
           )}
         </li>
       </ul>

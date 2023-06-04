@@ -31,6 +31,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "suneditor": "^2.44.12",
     "suneditor-react": "^3.5.0",
     "ui-neumorphism": "^1.1.3",

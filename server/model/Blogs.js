@@ -24,6 +24,12 @@ const blogsSchema = mongoose.Schema({
         content: {
           type: String,
         },
+        category: {
+          type: String,
+        },
+        author: {
+          type: String,
+        },
       },
     },
   ],

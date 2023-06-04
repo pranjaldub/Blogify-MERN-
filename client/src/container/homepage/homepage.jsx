@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from "./homepage.module.css";
 import Logo from "../../component/logosvg";
 import Navbar from "../../component/navbar";
@@ -9,9 +9,18 @@ import {useNavigate} from "react-router-dom";
 import {motion} from "framer-motion";
 import Image from "../../component/image";
 import {EditOutlined} from "@ant-design/icons";
+import {fetch} from "../../features/blog/blogSlice";
 const Homepage = ({intro, heading, subHeading}) => {
   const user = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
+  async function fetchBlogs() {
+    console.log("dispatcing");
+    dispatch((() => fetch())());
+  }
+  // useEffect(() => {
+  //   fetchBlogs();
+  // }, []);
   const navigate = useNavigate();
   return (
     <div className={classes.container}>
@@ -39,10 +48,10 @@ const Homepage = ({intro, heading, subHeading}) => {
           type="primary"
           style={{backgroundColor: "#7862F2"}}
           onClick={() => {
-            user.isLoggedIn ? navigate("/blogs") : navigate("/login");
+            navigate("/blogs");
           }}
         >
-          Start
+          Browse
         </Button>
         &nbsp;&nbsp;
         {!user.isLoggedIn && (

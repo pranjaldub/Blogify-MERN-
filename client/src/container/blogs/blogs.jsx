@@ -9,8 +9,14 @@ import {useMediaQuery} from "react-responsive";
 import {getBlogs} from "../../service/api";
 import List from "@mui/material/List";
 import {MantineProvider} from "@mantine/core";
+import {Skeleton} from "antd";
+import {DotChartOutlined} from "@ant-design/icons";
+import {useNavigate} from "react-router-dom";
 const Blogs = () => {
+  const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState("Technology");
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -20,13 +26,26 @@ const Blogs = () => {
   const isPortrait = useMediaQuery({query: "(orientation: portrait)"});
   const isRetina = useMediaQuery({query: "(min-resolution: 2dppx)"});
   async function fetchBlogs() {
+    setLoading(true);
     const data = await getBlogs();
-    console.log(data);
-    setBlogs(data.data[0].blogs);
+    const arr = [];
+    data.data.map(
+      (item) =>
+        arr.push({
+          blogs: item.blogs.filter(
+            (blog) => blog.blog.category.toUpperCase() === tab.toUpperCase()
+          ),
+        })
+      //console.log(item);
+    );
+
+    console.log("data", arr);
+    setBlogs(arr);
+    setLoading(false);
   }
   useEffect(() => {
     fetchBlogs();
-  }, []);
+  }, [tab]);
   return (
     <div className={classes.container}>
       <div className={classes.headingContainer}>
@@ -40,28 +59,69 @@ const Blogs = () => {
       </div>
       <div className={classes.blogsContainer}>
         <div className={classes.tab}>
-          <Tab />
+          <Tab setTab={setTab} />
         </div>
         {!isMobile ? (
           <div className={classes.blogs}>
             <MantineProvider withGlobalStyles withNormalizeCSS>
-              {blogs.map((item, id) => (
-                <BlogCard blog={item.blog} key={id} />
-              ))}
+              {loading
+                ? [1, 2, 3, 4, 5].map((item) => (
+                    <Skeleton.Node
+                      active={true}
+                      size="large"
+                      style={{width: 250, height: 300}}
+                    >
+                      <DotChartOutlined
+                        style={{fontSize: 80, color: "#bfbfbf"}}
+                      />
+                    </Skeleton.Node>
+                  ))
+                : // "loading"
+                  blogs.map((item) =>
+                    item.blogs.map((blog) => (
+                      <BlogCard
+                        blog={blog.blog}
+                        key={blog.id}
+                        author={blog.blog.author}
+                        blogId={blog.id}
+                      />
+                    ))
+                  )}
             </MantineProvider>
           </div>
         ) : (
           <div className={classes.blogsList}>
-            <List sx={{width: "100%"}}>
-              {blogs.map((item, id) => (
-                <BlogListItem blog={item.blog} key={id} />
-              ))}
+            <List
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {loading
+                ? [1, 2, 3, 4, 5].map((item) => (
+                    <Skeleton avatar paragraph={{rows: 1}} active={true} />
+                  ))
+                : blogs.map(
+                    (item) =>
+                      item.blogs.map((blog) => (
+                        <BlogListItem
+                          blog={blog.blog}
+                          key={blog.id}
+                          blogId={blog.id}
+                          author={blog.blog.author}
+                        />
+                      ))
+                    //console.log(item)
+                  )}
             </List>
           </div>
         )}
-        <div className={classes.pagination}>
+        {/* <div className={classes.pagination}>
           <Pagination count={5} color="primary" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

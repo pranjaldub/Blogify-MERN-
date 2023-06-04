@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import SearchButton from "../searchButton/searchButton";
 import {useMediaQuery} from "react-responsive";
-export default function TabComponent() {
+export default function TabComponent({setTab}) {
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -15,6 +15,7 @@ export default function TabComponent() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
+    setTab(event.target.innerText);
     setValue(newValue);
   };
 

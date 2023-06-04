@@ -7,14 +7,14 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function BlogList({blog}) {
+export default function BlogList({blog, author}) {
   return (
     <ListItem
       alignItems="center"
       style={{backgroundColor: "#F6F5FB", marginBottom: 15, borderRadius: 15}}
     >
       <ListItemAvatar>
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        <Avatar alt={author} src="/static/images/avatar/1.jpg" />
       </ListItemAvatar>
       <ListItemText
         primary={blog.heading}

@@ -12,7 +12,13 @@ import {Center} from "@mantine/core";
 
 const CreateBlogSteps = () => {
   const user = useSelector((state) => state.user);
-  const [blog, setBlog] = useState({heading: "", description: "", content: ""});
+  const [blog, setBlog] = useState({
+    heading: "",
+    description: "",
+    content: "",
+    category: "",
+    author: user.name,
+  });
   const {token} = theme.useToken();
   const [current, setCurrent] = useState(0);
   const steps = [
@@ -25,7 +31,7 @@ const CreateBlogSteps = () => {
       content: <InputDescription blog={blog} setBlog={setBlog} />,
     },
     {
-      title: "Last",
+      title: "Create",
       content: <CreateBlog blog={blog} setBlog={setBlog} />,
     },
   ];
