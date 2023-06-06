@@ -1,5 +1,5 @@
 /////signup user
-const baseUrl = "https://blogify-mern-backend-2tuvmsw8k-pranjaldub.vercel.app";
+const baseUrl = "https://blogify-backend-zzfj.onrender.com";
 export const signupUser = async (credentials) => {
   try {
     //console.log("sending", credentials);
