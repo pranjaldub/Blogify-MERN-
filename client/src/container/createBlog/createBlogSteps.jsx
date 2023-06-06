@@ -7,28 +7,35 @@ import InputDescription from "../../component/input/inputDescription";
 import {createBlog} from "../../service/api";
 import {useSelector, useDispatch} from "react-redux";
 import {Center} from "@mantine/core";
-
+import {useNavigate} from "react-router-dom";
 //import { set } from "mongoose";
 
 const CreateBlogSteps = () => {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const [enable, setEnable] = useState(false);
+  const [enableDesc, setEnableDesc] = useState(false);
   const [blog, setBlog] = useState({
     heading: "",
     description: "",
     content: "",
     category: "",
-    author: user.name,
+    author: user.username,
   });
   const {token} = theme.useToken();
   const [current, setCurrent] = useState(0);
   const steps = [
     {
       title: "Heading",
-      content: <InputHeading blog={blog} setBlog={setBlog} />,
+      content: (
+        <InputHeading blog={blog} setBlog={setBlog} setEnable={setEnable} />
+      ),
     },
     {
       title: "Description",
-      content: <InputDescription blog={blog} setBlog={setBlog} />,
+      content: (
+        <InputDescription blog={blog} setBlog={setBlog} setEnable={setEnable} />
+      ),
     },
     {
       title: "Create",
@@ -36,9 +43,11 @@ const CreateBlogSteps = () => {
     },
   ];
   const next = () => {
+    // setEnable(false);
     setCurrent(current + 1);
   };
   const prev = () => {
+    //setEnable(true);
     setCurrent(current - 1);
   };
   const items = steps.map((item) => ({
@@ -68,6 +77,14 @@ const CreateBlogSteps = () => {
     position: "relative",
     justifyContent: "space-around",
   };
+  async function createBlogHandler() {
+    const resp = await createBlog({username: user.username, blog: blog});
+    if (resp.isSuccess) {
+      navigate("/blogs");
+    } else {
+      alert("error");
+    }
+  }
   return (
     <div style={{height: "auto"}}>
       <Steps
@@ -92,6 +109,7 @@ const CreateBlogSteps = () => {
       >
         {current < steps.length - 1 && (
           <Button
+            disabled={enable ? false : true}
             type="primary"
             shape="round"
             size="large"
@@ -105,7 +123,9 @@ const CreateBlogSteps = () => {
             shape="round"
             size="large"
             type="primary"
-            onClick={() => createBlog({username: user.username, blog: blog})}
+            onClick={() => {
+              createBlogHandler();
+            }}
           >
             Submit
           </Button>

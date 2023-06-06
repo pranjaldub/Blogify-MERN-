@@ -7,6 +7,7 @@ import {
   createBlogs,
   getBlogs,
   getBlogsById,
+  updateBlog,
 } from "../controller/user-comtroller.js";
 
 const router = express.Router();
@@ -14,7 +15,8 @@ const router = express.Router();
 router
   .post("/signup", signupUser)
   .post("/login", loginUser)
-  .post("/createBlogs", createBlogs);
+  .post("/createBlogs", createBlogs)
+  .put("/updateBlog", updateBlog);
 router.get("/blogs", getBlogs).get("/blogs/:id", getBlogsById);
 
 export default router;

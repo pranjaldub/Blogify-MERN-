@@ -12,6 +12,7 @@ import {MantineProvider} from "@mantine/core";
 import {Skeleton} from "antd";
 import {DotChartOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
+import {Empty} from "antd";
 const Blogs = () => {
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
@@ -28,17 +29,15 @@ const Blogs = () => {
   async function fetchBlogs() {
     setLoading(true);
     const data = await getBlogs();
-    const arr = [];
-    data.data.map(
-      (item) =>
-        arr.push({
-          blogs: item.blogs.filter(
-            (blog) => blog.blog.category.toUpperCase() === tab.toUpperCase()
-          ),
-        })
-      //console.log(item);
+    var arr = [];
+    data.data.map((item) =>
+      arr.push({
+        blogs: item.blogs.filter(
+          (blog) => blog.blog.category.toUpperCase() === tab.toUpperCase()
+        ),
+      })
     );
-
+    arr = arr.filter((item) => !(item.blogs.length <= 0));
     console.log("data", arr);
     setBlogs(arr);
     setLoading(false);
@@ -64,29 +63,33 @@ const Blogs = () => {
         {!isMobile ? (
           <div className={classes.blogs}>
             <MantineProvider withGlobalStyles withNormalizeCSS>
-              {loading
-                ? [1, 2, 3, 4, 5].map((item) => (
-                    <Skeleton.Node
-                      active={true}
-                      size="large"
-                      style={{width: 250, height: 300}}
-                    >
-                      <DotChartOutlined
-                        style={{fontSize: 80, color: "#bfbfbf"}}
-                      />
-                    </Skeleton.Node>
+              {loading ? (
+                [1, 2, 3, 4, 5].map((item) => (
+                  <Skeleton.Node
+                    active={true}
+                    size="large"
+                    style={{width: 250, height: 300}}
+                  >
+                    <DotChartOutlined
+                      style={{fontSize: 80, color: "#bfbfbf"}}
+                    />
+                  </Skeleton.Node>
+                ))
+              ) : // "loading"
+              blogs[0]?.blogs.length > 0 ? (
+                blogs.map((item) =>
+                  item.blogs.map((blog) => (
+                    <BlogCard
+                      blog={blog.blog}
+                      key={blog.id}
+                      author={blog.blog.author}
+                      blogId={blog.id}
+                    />
                   ))
-                : // "loading"
-                  blogs.map((item) =>
-                    item.blogs.map((blog) => (
-                      <BlogCard
-                        blog={blog.blog}
-                        key={blog.id}
-                        author={blog.blog.author}
-                        blogId={blog.id}
-                      />
-                    ))
-                  )}
+                )
+              ) : (
+                <Empty />
+              )}
             </MantineProvider>
           </div>
         ) : (

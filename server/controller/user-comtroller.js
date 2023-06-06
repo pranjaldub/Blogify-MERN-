@@ -184,3 +184,40 @@ export const getBlogsById = async (req, res) => {
     return res.status(500).json({msg: "blog not found"});
   }
 };
+
+export const updateBlog = async (req, res) => {
+  try {
+    const blog = req.body; //req = {username:"..."  , blog:{id:"" , ...}}
+    //console.log("blog", blog.blog.category);
+
+    // {"username":"Michael" , "blog":{ "id":"3a" , "heading": "The Benefits of Exercise",
+    //     "description": "Discover the advantages of regular exercise.",
+    //     "content": "<h2  a healthier and happier life.</p>",
+    //     "category": "life",
+    //     "author": "Michael"}}
+    const user = await Blogs.find({name: blog.username});
+    let userBlogs = user[0].blogs;
+
+    userBlogs.find((item) => item.id == blog.blog.id).blog = blog.blog;
+
+    await Blogs.updateOne(
+      {name: blog.username},
+      {
+        $set: {
+          blogs: userBlogs,
+        },
+      }
+    );
+    const u = await Blogs.find({blogs: {$elemMatch: {id: blog.blog.id}}});
+    var arr = [];
+    u.map((item) => {
+      arr.push(
+        ...item.blogs.filter((userBlog) => userBlog.id === blog.blog.id)
+      );
+    });
+    return res.status(200).json({msg: "Blog updated", data: arr[0]});
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not updated"});
+  }
+};

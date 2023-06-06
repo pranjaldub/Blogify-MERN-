@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import image from "../svg/one.svg";
 import TextArea from "antd/es/input/TextArea";
+import {useEffect, useState} from "react";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -77,8 +78,16 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function InputDescription({blog, setBlog}) {
+export default function InputDescription({blog, setBlog, setEnable}) {
   const {classes} = useStyles();
+
+  useEffect(() => {
+    if (blog.description.length == "") {
+      setEnable(false);
+    } else {
+      setEnable(true);
+    }
+  }, [blog.description]);
   return (
     <div className={classes.wrapper}>
       <div className={classes.body}>
@@ -93,7 +102,7 @@ export default function InputDescription({blog, setBlog}) {
             classNames={{input: classes.input, root: classes.inputWrapper}}
             rows={4}
             onChange={(text) => {
-              console.log(text);
+              //console.log(text);
               setBlog((prevState) => ({
                 ...prevState,
                 description: text.target.value,

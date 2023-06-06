@@ -11,6 +11,7 @@ import image from "../svg/one.svg";
 import InputCategory from "./inputCategory";
 import {DownOutlined} from "@ant-design/icons";
 import {Dropdown, message, Space} from "antd";
+import {useEffect} from "react";
 
 // const InputCategory = () => {
 //   const onClick = (e) => {
@@ -119,7 +120,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function InputHeading({blog, setBlog}) {
+export default function InputHeading({blog, setBlog, setEnable}) {
   const onClick = (e) => {
     console.log(e.domEvent.target.innerText);
 
@@ -143,6 +144,13 @@ export default function InputHeading({blog, setBlog}) {
     },
   ];
   const {classes} = useStyles();
+  useEffect(() => {
+    if (blog.heading.length == 0 || !blog.category) {
+      setEnable(false);
+    } else {
+      setEnable(true);
+    }
+  }, [blog.heading, blog.category]);
   return (
     <div className={classes.wrapper}>
       <div className={classes.body}>
@@ -157,7 +165,8 @@ export default function InputHeading({blog, setBlog}) {
             classNames={{input: classes.input, root: classes.inputWrapper}}
             //value={blog.heading}
             onChange={(text) => {
-              console.log(text);
+              //console.log(text);
+
               setBlog((prevState) => ({
                 ...prevState,
                 heading: text.target.value,
