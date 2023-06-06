@@ -1,5 +1,5 @@
 /////signup user
-const baseUrl = "http://localhost:8000";
+const baseUrl = "https://blogify-mern-backend-2tuvmsw8k-pranjaldub.vercel.app";
 export const signupUser = async (credentials) => {
   try {
     //console.log("sending", credentials);
