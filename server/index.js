@@ -2,8 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-import {connectDB} from "../database/db.js";
-import router from "../routes/route.js";
+import {connectDB} from "./database/db.js";
+import router from "./routes/route.js";
 //initializing express app
 const app = express();
 
