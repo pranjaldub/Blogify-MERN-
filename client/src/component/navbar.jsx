@@ -39,7 +39,7 @@ const Navbar = () => {
               shape="round"
               size="medium"
               type="default"
-              style={{backgroundColor: "#7862F2"}}
+              style={{color: "#7862F2"}}
               onClick={() => dispatch(logout())}
             >
               logout
