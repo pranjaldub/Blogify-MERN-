@@ -1,6 +1,6 @@
 /////signup user
-// const baseUrl = "https://blogify-backend-zzfj.onrender.com";
-const baseUrl = "http://localhost:8000";
+const baseUrl = "https://blogify-backend-zzfj.onrender.com";
+//const baseUrl = "http://localhost:8000";
 export const signupUser = async (credentials) => {
   try {
     //console.log("sending", credentials);
