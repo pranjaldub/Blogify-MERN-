@@ -50,7 +50,7 @@ const Blog = () => {
 
   async function updateHandler() {
     const updatedBlog = await updateBlog(data, user.username);
-    console.log("updated", updatedBlog);
+    console.log("updated-", updatedBlog);
     setBlog(updatedBlog.data.blog);
     toggleEditHandler();
   }
