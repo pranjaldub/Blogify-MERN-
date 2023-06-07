@@ -34,10 +34,11 @@ const Navbar = () => {
             >
               Create <PlusOutlined />
             </Button>
+            &nbsp; &nbsp;
             <Button
               shape="round"
               size="medium"
-              type="primary"
+              type="default"
               style={{backgroundColor: "#7862F2"}}
               onClick={() => dispatch(logout())}
             >
