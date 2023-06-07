@@ -24,15 +24,26 @@ const Navbar = () => {
             login
           </Button>
         ) : (
-          <Button
-            shape="round"
-            size="medium"
-            type="primary"
-            style={{backgroundColor: "#7862F2"}}
-            onClick={() => dispatch(logout())}
-          >
-            logout
-          </Button>
+          <>
+            <Button
+              shape="round"
+              size="medium"
+              type="primary"
+              style={{backgroundColor: "#7862F2"}}
+              onClick={() => navigate("/createBlog")}
+            >
+              Create <PlusOutlined />
+            </Button>
+            <Button
+              shape="round"
+              size="medium"
+              type="primary"
+              style={{backgroundColor: "#7862F2"}}
+              onClick={() => dispatch(logout())}
+            >
+              logout
+            </Button>
+          </>
         )}
 
         <MobileNavbar />
