@@ -6,16 +6,19 @@ import classes from "./blogs.module.css";
 import Pagination from "@mui/material/Pagination";
 import React, {useEffect, useState} from "react";
 import {useMediaQuery} from "react-responsive";
-import {getBlogs} from "../../service/api";
+import {getBlogs, getBlogsLogout} from "../../service/api";
 import List from "@mui/material/List";
 import {MantineProvider} from "@mantine/core";
 import {Skeleton} from "antd";
 import {DotChartOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {Empty} from "antd";
+import {useSelector} from "react-redux";
 const Blogs = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const [blogs, setBlogs] = useState([]);
+  const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState("Technology");
   const isDesktopOrLaptop = useMediaQuery({
@@ -28,7 +31,10 @@ const Blogs = () => {
   const isRetina = useMediaQuery({query: "(min-resolution: 2dppx)"});
   async function fetchBlogs() {
     setLoading(true);
-    const data = await getBlogs();
+
+    const data = user.isLoggedIn
+      ? await getBlogs(user.username)
+      : await getBlogsLogout();
     var arr = [];
     data.data.map((item) =>
       arr.push({
@@ -40,6 +46,8 @@ const Blogs = () => {
     arr = arr.filter((item) => !(item.blogs.length <= 0));
     console.log("data", arr);
     setBlogs(arr);
+    //console.log("user data", data.userData);
+    setUserData(data.userData);
     setLoading(false);
   }
   useEffect(() => {
@@ -67,6 +75,7 @@ const Blogs = () => {
                 [1, 2, 3, 4, 5].map((item) => (
                   <Skeleton.Node
                     active={true}
+                    id={item}
                     size="large"
                     style={{width: 250, height: 300}}
                   >
@@ -84,6 +93,16 @@ const Blogs = () => {
                       key={blog.id}
                       author={blog.blog.author}
                       blogId={blog.id}
+                      liked={
+                        user.isLoggedIn && userData.likedBlogs.includes(blog.id)
+                          ? true
+                          : false
+                      }
+                      saved={
+                        user.isLoggedIn && userData.savedBlogs.includes(blog.id)
+                          ? true
+                          : false
+                      }
                     />
                   ))
                 )
@@ -115,6 +134,18 @@ const Blogs = () => {
                           key={blog.id}
                           blogId={blog.id}
                           author={blog.blog.author}
+                          liked={
+                            user.isLoggedIn &&
+                            userData.likedBlogs.includes(blog.id)
+                              ? true
+                              : false
+                          }
+                          saved={
+                            user.isLoggedIn &&
+                            userData.savedBlogs.includes(blog.id)
+                              ? true
+                              : false
+                          }
                         />
                       ))
                     //console.log(item)

@@ -5,8 +5,14 @@ import MenuItem from "@mui/material/MenuItem";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import {MenuOutlined} from "@ant-design/icons";
 import classes from "./mobileNavbar.module.css";
+import {useSelector, useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {logout} from "../features/user/userSlice";
 export default function MobileNavbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     const element = document.getElementById("menuIcon");
@@ -46,9 +52,30 @@ export default function MobileNavbar() {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>Home</MenuItem>
-        <MenuItem onClick={handleClose}>Blogs</MenuItem>
-        <MenuItem onClick={handleClose}>About</MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate("/");
+          }}
+        >
+          Home
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate("/blogs");
+          }}
+        >
+          Blogs
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate("/blogs");
+          }}
+        >
+          About
+        </MenuItem>
       </Menu>
     </div>
   );

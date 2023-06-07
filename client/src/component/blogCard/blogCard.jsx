@@ -18,7 +18,10 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {likeBlog, saveBlog} from "../../service/api";
 const useStyles = createStyles((theme) => ({
   card: {
     position: "relative",
@@ -59,9 +62,26 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const BlogCard = ({blog, author, blogId}) => {
+const BlogCard = ({blog, author, blogId, liked, saved}) => {
+  const [like, setLike] = useState(false);
+  const [save, setSave] = useState(false);
   const navigate = useNavigate();
   console.log("author", author);
+  const user = useSelector((state) => state.user);
+  async function likeHandler() {
+    const obj = {username: user.username, blogId: blogId};
+    const resp = await likeBlog(obj);
+    if (resp.isSuccess) {
+      setLike(true);
+    }
+  }
+  async function saveHandler() {
+    const obj = {username: user.username, blogId: blogId};
+    const resp = await saveBlog(obj);
+    if (resp.isSuccess) {
+      setSave(true);
+    }
+  }
   // <Card
   //   hoverable
   //   style={{
@@ -98,12 +118,7 @@ const BlogCard = ({blog, author, blogId}) => {
   const description =
     "Write great English with the ultimate tool for writing, in your favorite websites such as Facebook, Gmail, LinkedIn and more. While you're typing, a small Ginger logo will appear at the bottom right corner of your text fields. This tool will take care of all your writing needs.";
   return (
-    <Card
-      withBorder
-      radius="lg"
-      className={cx(classes.card)}
-      onClick={() => navigate(`/blogs/${blogId}`)}
-    >
+    <Card withBorder radius="lg" className={cx(classes.card)}>
       <Card.Section>
         <a>
           <Image src={image} height={180} />
@@ -118,7 +133,12 @@ const BlogCard = ({blog, author, blogId}) => {
         {rating}
       </Badge> */}
 
-      <Text className={classes.title} fw={500} component="a">
+      <Text
+        className={classes.title}
+        fw={500}
+        component="a"
+        onClick={() => navigate(`/blogs/${blogId}`)}
+      >
         {blog.heading}
       </Text>
 
@@ -135,11 +155,23 @@ const BlogCard = ({blog, author, blogId}) => {
         </Center>
 
         <Group spacing={8} mr={0}>
-          <ActionIcon className={classes.action}>
-            <IconHeart size="1rem" color={theme.colors.red[6]} />
+          <ActionIcon
+            className={classes.action}
+            onClick={user.isLoggedIn ? likeHandler : () => navigate("/login")}
+          >
+            <IconHeart
+              size="1rem"
+              color={like || liked ? theme.colors.red[6] : theme.colors.black}
+            />
           </ActionIcon>
-          <ActionIcon className={classes.action}>
-            <IconBookmark size="1rem" color={theme.colors.yellow[7]} />
+          <ActionIcon
+            className={classes.action}
+            onClick={user.isLoggedIn ? saveHandler : () => navigate("/login")}
+          >
+            <IconBookmark
+              size="1rem"
+              color={save || saved ? theme.colors.red[6] : theme.colors.black}
+            />
           </ActionIcon>
           <ActionIcon className={classes.action}>
             <IconShare size="1rem" />

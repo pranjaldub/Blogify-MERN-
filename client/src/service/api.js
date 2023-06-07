@@ -1,5 +1,6 @@
 /////signup user
-const baseUrl = "https://blogify-backend-zzfj.onrender.com";
+// const baseUrl = "https://blogify-backend-zzfj.onrender.com";
+const baseUrl = "http://localhost:8000";
 export const signupUser = async (credentials) => {
   try {
     //console.log("sending", credentials);
@@ -105,7 +106,48 @@ export const createBlog = async (blog) => {
   }
 };
 
-export const getBlogs = async () => {
+export const getBlogs = async (username) => {
+  try {
+    //console.log("sending", credentials);
+    const requestOptions = {
+      method: "GET",
+      headers: {"Content-Type": "application/json"},
+      // body: JSON.stringify({
+      //   username: blog.username,
+      //   blog: blog.blog,
+      // }),
+    };
+    //debugger;
+    const response = await fetch(
+      `${baseUrl}/blogs/${username}`,
+      requestOptions
+    );
+    //console.log("incoming", response);
+
+    const resp = await response.json();
+    console.log("resp ", resp);
+    if (response.status !== 200) {
+      //console.log("inside if");
+      return {
+        isSuccess: false,
+        msg: "failed",
+      };
+    }
+
+    return {
+      isSuccess: true,
+      message: "blog fetch successful",
+      data: resp.data,
+      userData: resp.userData,
+    };
+  } catch (err) {
+    //throw err;
+    //console.log(err);
+    return {isSuccess: false, error: "Response failure , an error has occured"};
+  }
+};
+
+export const getBlogsLogout = async () => {
   try {
     //console.log("sending", credentials);
     const requestOptions = {
@@ -130,14 +172,17 @@ export const getBlogs = async () => {
       };
     }
 
-    return {isSuccess: true, message: "blog fetch successful", data: resp.data};
+    return {
+      isSuccess: true,
+      message: "blog fetch successful",
+      data: resp.data,
+    };
   } catch (err) {
     //throw err;
     //console.log(err);
     return {isSuccess: false, error: "Response failure , an error has occured"};
   }
 };
-
 export const getBlogsById = async (blogId) => {
   try {
     //console.log("sending", credentials);
@@ -150,7 +195,10 @@ export const getBlogsById = async (blogId) => {
       // }),
     };
     //debugger;
-    const response = await fetch(`${baseUrl}/blogs/${blogId}`, requestOptions);
+    const response = await fetch(
+      `${baseUrl}/blogsById/${blogId}`,
+      requestOptions
+    );
     //console.log("incoming", response);
 
     const resp = await response.json();
@@ -200,6 +248,70 @@ export const updateBlog = async (blog, username) => {
       message: "blog updated successful",
       data: resp.data,
     };
+  } catch (err) {
+    //throw err;
+    //console.log(err);
+    return {isSuccess: false, error: "Response failure , an error has occured"};
+  }
+};
+
+export const likeBlog = async (obj) => {
+  try {
+    //console.log("sending", credentials);
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        ...obj,
+      }),
+    };
+    //debugger;
+    const response = await fetch(`${baseUrl}/likeBlog`, requestOptions);
+    //console.log("incoming", response);
+
+    const resp = await response.json();
+    //console.log("resp ", resp);
+    if (response.status !== 200) {
+      //console.log("inside if");
+      return {
+        isSuccess: false,
+        message: resp.msg,
+      };
+    }
+
+    return {isSuccess: true, message: "like successful", data: resp.data};
+  } catch (err) {
+    //throw err;
+    //console.log(err);
+    return {isSuccess: false, error: "Response failure , an error has occured"};
+  }
+};
+
+export const saveBlog = async (obj) => {
+  try {
+    //console.log("sending", credentials);
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        ...obj,
+      }),
+    };
+    //debugger;
+    const response = await fetch(`${baseUrl}/saveBlog`, requestOptions);
+    //console.log("incoming", response);
+
+    const resp = await response.json();
+    //console.log("resp ", resp);
+    if (response.status !== 200) {
+      //console.log("inside if");
+      return {
+        isSuccess: false,
+        message: resp.msg,
+      };
+    }
+
+    return {isSuccess: true, message: "save successful", data: resp.data};
   } catch (err) {
     //throw err;
     //console.log(err);

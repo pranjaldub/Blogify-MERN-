@@ -3,10 +3,11 @@ import {createSlice} from "@reduxjs/toolkit";
 //slice to initiate login and logout process in global state
 export const userSlice = createSlice({
   name: "user",
-  initialState: {isLoggedIn: false, name: "", username: ""},
+  initialState: {isLoggedIn: false, name: "", username: "", data: {}},
   reducers: {
     login: (state, action) => {
       const user = {
+        ...state,
         isLoggedIn: true,
         name: action.payload.name,
         username: action.payload.username,
@@ -14,13 +15,17 @@ export const userSlice = createSlice({
       return user;
     },
     logout: (state) => {
-      return {isLoggedIn: false, name: "", username: ""};
+      return {...state, isLoggedIn: false, name: "", username: ""};
+    },
+    loadData: (state, action) => {
+      //console.log(action.payload.data);
+      return {...state, data: action.payload.data};
     },
   },
 });
 
 //for dispatching actions (logging in)
-export const {login, logout} = userSlice.actions;
+export const {login, logout, loadData} = userSlice.actions;
 
 //for configure store
 export default userSlice.reducer;

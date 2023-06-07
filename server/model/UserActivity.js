@@ -8,31 +8,10 @@ const userActivitySchema = mongoose.Schema({
     required: true,
     unique: true,
   },
-  createdBlogs: [
-    {
-      blogId: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  createdBlogs: [],
 
-  savedBlogs: [
-    {
-      blogId: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
-  likedBlogs: [
-    {
-      blogId: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  savedBlogs: [],
+  likedBlogs: [],
 });
 
 const UserActivity = mongoose.model("UserActivity", userActivitySchema);

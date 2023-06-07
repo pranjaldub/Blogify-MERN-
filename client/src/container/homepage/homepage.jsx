@@ -10,17 +10,32 @@ import {motion} from "framer-motion";
 import Image from "../../component/image";
 import {EditOutlined} from "@ant-design/icons";
 import {fetch} from "../../features/blog/blogSlice";
+import {getBlogs, getBlogsLogout} from "../../service/api";
+import {loadData} from "../../features/user/userSlice";
 const Homepage = ({intro, heading, subHeading}) => {
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   async function fetchBlogs() {
-    console.log("dispatcing");
-    dispatch((() => fetch())());
+    const data = await getBlogs(user.username);
+    console.log("inside home", data);
+    dispatch(loadData({data: data.userData}));
   }
-  // useEffect(() => {
-  //   fetchBlogs();
-  // }, []);
+  async function fetchBlogslogout() {
+    const data = await getBlogsLogout();
+    // console.log("inside home", data);
+    //dispatch(loadData({data: data.userData}));
+  }
+
+  useEffect(() => {
+    if (user.isLoggedIn) {
+      fetchBlogs();
+    }
+    // } else {
+    //   fetchBlogslogout();
+    // }
+  }, []);
+
   const navigate = useNavigate();
   return (
     <div className={classes.container}>

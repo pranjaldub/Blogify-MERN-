@@ -22,20 +22,23 @@ const Blog = () => {
     description: "",
     content: "",
     category: "",
-    author: "pd",
+    author: "",
   });
   async function fetchBlog() {
     setLoading(true);
     const data = await getBlogsById(blogId);
+    console.log("blogData", data);
     setBlog(data.data[0].blog);
-    setData({
-      content: data.data[0].blog.content,
-      heading: data.data[0].blog.heading,
-      description: data.data[0].blog.description,
-      author: data.data[0].blog.author,
-      category: data.data[0].blog.category,
-      id: blogId,
-    });
+    if (user.isLoggedIn) {
+      setData({
+        content: data.data[0].blog.content,
+        heading: data.data[0].blog.heading,
+        description: data.data[0].blog.description,
+        author: data.data[0].blog.author,
+        category: data.data[0].blog.category,
+        id: blogId,
+      });
+    }
     setLoading(false);
   }
   useEffect(() => {
@@ -56,7 +59,7 @@ const Blog = () => {
       {loading ? (
         "loading"
       ) : (
-        <div>
+        <div style={{padding: 20}}>
           <div>{blog.heading}</div>
           {edit && (
             <div>

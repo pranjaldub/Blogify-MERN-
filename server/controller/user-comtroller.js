@@ -2,6 +2,7 @@
 
 import User from "../model/User.js";
 import Blogs from "../model/Blogs.js";
+import UserActivity from "../model/UserActivity.js";
 import Token from "../model/Token.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -28,6 +29,12 @@ export const signupUser = async (req, res) => {
       //   return res.status(500).json({msg: "username alraedy exists"});
       // }
       await User.create(user);
+      await UserActivity.create({
+        username: req.body.username,
+        createdBlogs: [],
+        likedBlogs: [],
+        savedBlogs: [],
+      });
       return res.status(201).json({msg: "signup successful"});
     } catch (err) {
       if ({...err}.code === 11000) {
@@ -153,8 +160,52 @@ export const getBlogs = async (req, res) => {
 
     //   await Blogs.create(blogObject);
     try {
+      const username = req.params.username;
       const data = await Blogs.find({});
-      res.status(200).send({msg: "fetching successful", data: data});
+      const userData = await UserActivity.find({username: username});
+      console.log(userData);
+      res.status(200).send({
+        msg: "fetching successful",
+        data: data,
+        userData: userData[0],
+      });
+    } catch (err) {
+      return res.status(500).json({msg: "blog not submitted"});
+    }
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not submitted"});
+  }
+};
+
+export const getBlogsLogout = async (req, res) => {
+  try {
+    // const blog = req.body; //req = {username:"..." , blog:"..."}
+
+    // const foundUser = await Blogs.findOne({username: blog.username});
+    // //user already exists
+    // if (foundUser) {
+    //   //update existing field
+    //   foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+    // } else {
+    //   const blogObject = {
+    //     name: blog.username,
+    //     blogs: [{id: uuidv4(), blog: blog.blog}],
+    //   };
+
+    //   console.log(blogObject);
+
+    //   await Blogs.create(blogObject);
+    try {
+      //const username = req.params.username;
+      const data = await Blogs.find({});
+      //const userData = await UserActivity.find({username: username});
+      //console.log(userData);
+      res.status(200).send({
+        msg: "fetching successful",
+        data: data,
+        //userData: userData[0],
+      });
     } catch (err) {
       return res.status(500).json({msg: "blog not submitted"});
     }
@@ -219,5 +270,55 @@ export const updateBlog = async (req, res) => {
   } catch (error) {
     //console.log(error);
     return res.status(500).json({msg: "blog not updated"});
+  }
+};
+
+export const likeBlog = async (req, res) => {
+  try {
+    const blog = req.body; //req = {username:"..." , blogId:"..."}
+    //console.log("blog", blog);
+    const foundUser = await UserActivity.findOne({username: blog.username});
+    //user already exists
+
+    //update existing field
+    //foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+    await UserActivity.updateOne(
+      {username: blog.username},
+      {
+        $set: {
+          likedBlogs: [...foundUser.likedBlogs, blog.blogId],
+        },
+      }
+    );
+    const found = await UserActivity.findOne({username: blog.username});
+    return res.status(200).json({msg: "Blog liked", data: found});
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not liked"});
+  }
+};
+
+export const saveBlog = async (req, res) => {
+  try {
+    const blog = req.body; //req = {username:"..." , blogId:"..."}
+    //console.log("blog", blog);
+    const foundUser = await UserActivity.findOne({username: blog.username});
+    //user already exists
+
+    //update existing field
+    //foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+    await UserActivity.updateOne(
+      {username: blog.username},
+      {
+        $set: {
+          savedBlogs: [...foundUser.savedBlogs, blog.blogId],
+        },
+      }
+    );
+    const found = await UserActivity.findOne({username: blog.username});
+    return res.status(200).json({msg: "Blog saved", data: found});
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not saved"});
   }
 };

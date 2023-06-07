@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("/", router);
-dotenv.config({path: "../local.env"});
+dotenv.config({path: "./local.env"});
 //port
 const PORT = 8000;
 
