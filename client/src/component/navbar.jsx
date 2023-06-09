@@ -57,7 +57,7 @@ const Navbar = () => {
           <p>Blogs</p>
         </li>
 
-        <li>
+        <li onClick={() => navigate("/about")}>
           <p>About</p>
         </li>
         <li>

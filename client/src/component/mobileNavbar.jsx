@@ -1,7 +1,16 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import {Menu, Button, Text} from "@mantine/core";
+import {
+  IconHome2,
+  IconSearch,
+  IconPhoto,
+  IconMessageCircle,
+  IconTrash,
+  IconArrowsLeftRight,
+  IconCategory2,
+  IconUserCircle,
+} from "@tabler/icons-react";
+
 import ReorderIcon from "@mui/icons-material/Reorder";
 import {MenuOutlined} from "@ant-design/icons";
 import classes from "./mobileNavbar.module.css";
@@ -28,55 +37,57 @@ export default function MobileNavbar() {
   };
 
   return (
-    <div>
-      <Button
-        aria-controls={open ? "demo-positioned-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        <MenuOutlined id="menuIcon" className={classes.menuIcon} />
-      </Button>
-      <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        // anchorOrigin={{
-        //   vertical: "top",
-        //   horizontal: "left",
-        // }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            navigate("/");
-          }}
-        >
+    <Menu
+      shadow="md"
+      width={200}
+      transitionProps={{transition: "scale-y", duration: 200}}
+    >
+      <Menu.Target style={{marginLeft: 20, marginTop: 2}}>
+        <IconCategory2 />
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        Pages
+        <Menu.Item icon={<IconHome2 size={14} />} onClick={() => navigate("/")}>
           Home
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            navigate("/blogs");
-          }}
+        </Menu.Item>
+        <Menu.Item
+          icon={<IconMessageCircle size={14} />}
+          onClick={() => navigate("/blogs")}
         >
           Blogs
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            navigate("/blogs");
-          }}
+        </Menu.Item>
+        <Menu.Item
+          icon={<IconPhoto size={14} />}
+          onClick={() => navigate("/blogs")}
+        >
+          Features
+        </Menu.Item>
+        <Menu.Item
+          icon={<IconUserCircle size={14} />}
+          onClick={() => navigate("/about")}
         >
           About
-        </MenuItem>
-      </Menu>
-    </div>
+        </Menu.Item>
+        {/* <Menu.Item
+          icon={<IconSearch size={14} />}
+          rightSection={
+            <Text size="xs" color="dimmed">
+              ⌘K
+            </Text>
+          }
+        >
+          Search
+        </Menu.Item> */}
+        <Menu.Divider />
+        {/* <Menu.Label>Danger zone</Menu.Label>
+        <Menu.Item icon={<IconArrowsLeftRight size={14} />}>
+          Transfer my data
+        </Menu.Item>
+        <Menu.Item color="red" icon={<IconTrash size={14} />}>
+          Delete my account
+        </Menu.Item> */}
+      </Menu.Dropdown>
+    </Menu>
   );
 }

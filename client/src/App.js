@@ -12,6 +12,7 @@ import Editor from "./component/editor/mobileEditor";
 import CreateBlog from "./container/createBlog/createBlog";
 import Blog from "./container/blog/blog";
 import CreateBlogSteps from "./container/createBlog/createBlogSteps";
+import About from "./container/about/about";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -46,6 +47,7 @@ function App() {
             }
           />
           <Route path="/login" element={<LoginSignup />} />
+          <Route path="/about" element={<About />} />
 
           <Route path="/blogs" element={<Blogs />} />
 
