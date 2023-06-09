@@ -134,10 +134,10 @@ const useStyles = createStyles((theme) => ({
   },
 
   image: {
-    maxWidth: "40%",
+    height: "100%",
 
     [theme.fn.smallerThan("sm")]: {
-      maxWidth: "100%",
+      maxWidth: "80%",
     },
   },
 
