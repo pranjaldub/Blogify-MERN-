@@ -1,6 +1,6 @@
 /////signup user
-const baseUrl = "https://blogify-backend-zzfj.onrender.com";
-//const baseUrl = "http://localhost:8000";
+//const baseUrl = "https://blogify-backend-zzfj.onrender.com";
+const baseUrl = "http://localhost:8000";
 export const signupUser = async (credentials) => {
   try {
     //console.log("sending", credentials);
@@ -312,6 +312,49 @@ export const saveBlog = async (obj) => {
     }
 
     return {isSuccess: true, message: "save successful", data: resp.data};
+  } catch (err) {
+    //throw err;
+    //console.log(err);
+    return {isSuccess: false, error: "Response failure , an error has occured"};
+  }
+};
+
+///stats/:username
+export const getStats = async (username) => {
+  try {
+    //console.log("sending", credentials);
+    const requestOptions = {
+      method: "GET",
+      headers: {"Content-Type": "application/json"},
+      // body: JSON.stringify({
+      //   username: blog.username,
+      //   blog: blog.blog,
+      // }),
+    };
+    //debugger;
+    const response = await fetch(
+      `${baseUrl}/stats/${username}`,
+      requestOptions
+    );
+    //console.log("incoming", response);
+
+    const resp = await response.json();
+    console.log("resp ", resp);
+    if (response.status !== 200) {
+      //console.log("inside if");
+      return {
+        isSuccess: false,
+        msg: "failed",
+      };
+    }
+
+    return {
+      isSuccess: true,
+      message: "blog fetch successful",
+      likedCount: resp.likedCount,
+      savedCount: resp.savedCount,
+      userData: resp.userData,
+    };
   } catch (err) {
     //throw err;
     //console.log(err);

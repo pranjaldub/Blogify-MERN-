@@ -13,6 +13,7 @@ import CreateBlog from "./container/createBlog/createBlog";
 import Blog from "./container/blog/blog";
 import CreateBlogSteps from "./container/createBlog/createBlogSteps";
 import About from "./container/about/about";
+import Dashboard from "./container/dashboard/dashboard";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -55,6 +56,9 @@ function App() {
 
           <Route path="/createBlog" element={<PrivateRoute />}>
             <Route path="/createBlog" element={<CreateBlogSteps />} />
+          </Route>
+          <Route path="/dashboard" element={<PrivateRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
       </div>

@@ -1,0 +1,51 @@
+.headingContainer{
+    height: 100%;
+    width: 100%;
+ 
+    margin:4em 2em 2em 2em;
+    padding:auto;
+    font-family: Poppins;
+    
+   
+   
+}
+.dashboard{
+    padding:auto;
+    margin:auto;
+
+}
+.saveLikeContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding:2em;
+    width:100%;
+    max-width: 75em;
+    height:100%;
+   
+}
+.savedContainer , .likedContainer{
+    padding:1em;
+    border:1px solid rgb(131, 129, 129);
+    border-radius : 15px;
+    height: 100%;
+   width: 100%;
+    margin:1em;
+    font-family: Poppins;
+    
+}
+
+.savedHeading{
+    color:#4263EB;
+    background-color: #DBE4FF;
+    border-radius: 15px;
+    margin-bottom: 1em;
+    padding:0.5em
+}
+@media screen and (max-width:900px) {
+    .saveLikeContainer{
+        flex-direction: column;
+        width:100%
+    }
+}

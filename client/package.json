@@ -17,6 +17,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tremor/react": "^3.0.1",
     "antd": "^5.5.1",
     "draft-js": "^0.11.7",
     "framer-motion": "^10.12.16",
@@ -65,6 +66,7 @@
     ]
   },
   "devDependencies": {
-    "@ckeditor/ckeditor5-alignment": "^38.0.1"
+    "@ckeditor/ckeditor5-alignment": "^38.0.1",
+    "tailwindcss": "^3.3.2"
   }
 }

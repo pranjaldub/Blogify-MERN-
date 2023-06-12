@@ -133,7 +133,7 @@ export default function About() {
   }, []);
   return (
     <div style={{position: "relative", overflow: "hidden"}}>
-      <AboutSvg style={{position: "absolute", width: "80vw"}} />
+      <AboutSvg style={{position: "absolute", width: "80vw", left: "35%"}} />
       <Container
         size="lg"
         py="xl"

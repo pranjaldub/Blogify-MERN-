@@ -104,6 +104,7 @@ export const createBlogs = async (req, res) => {
     if (foundUser) {
       //update existing field
       //foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+      const id = uuidv4();
       await Blogs.updateOne(
         {name: blog.username},
         {
@@ -111,10 +112,21 @@ export const createBlogs = async (req, res) => {
             blogs: [
               ...foundUser.blogs,
               {
-                id: uuidv4(),
+                id: id,
                 blog: blog.blog,
               },
             ],
+          },
+        }
+      );
+      const userActivityObj = await UserActivity.findOne({
+        username: blog.username,
+      });
+      await UserActivity.updateOne(
+        {username: blog.username},
+        {
+          $set: {
+            createdBlogs: [...userActivityObj.createdBlogs, id],
           },
         }
       );
@@ -320,5 +332,56 @@ export const saveBlog = async (req, res) => {
   } catch (error) {
     //console.log(error);
     return res.status(500).json({msg: "blog not saved"});
+  }
+};
+
+export const getStats = async (req, res) => {
+  try {
+    const username = req.params.username;
+
+    const userData = await UserActivity.find({username: username});
+
+    const CountLike = async () => {
+      let likedData = {};
+      await Promise.all(
+        userData[0].createdBlogs.map(async (blogId) => {
+          const likeCount = await UserActivity.countDocuments({
+            likedBlogs: blogId,
+          });
+
+          likedData[`${blogId}`] = likeCount;
+          console.log("filling", likeCount);
+        })
+      );
+
+      return likedData;
+    };
+    const CountSave = async () => {
+      let savedData = {};
+      await Promise.all(
+        userData[0].createdBlogs.map(async (blogId) => {
+          const saveCount = await UserActivity.countDocuments({
+            savedBlogs: blogId,
+          });
+
+          savedData[`${blogId}`] = saveCount;
+          console.log("filling", saveCount);
+        })
+      );
+
+      return savedData;
+    };
+    const likeObj = await CountLike();
+    const saveObj = await CountSave();
+    console.log("filled");
+    res.status(200).send({
+      msg: "fetching successful",
+
+      userData: userData[0], // from this we got username , created blogs , saved blogs , liked blogs
+      likedCount: likeObj, // from this we got which blog is liked by how many users
+      savedCount: saveObj, //// from this we got which blog is saved by how many users
+    });
+  } catch (err) {
+    return res.status(500).json({msg: "cannot fetch stats"});
   }
 };

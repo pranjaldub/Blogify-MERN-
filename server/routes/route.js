@@ -11,6 +11,7 @@ import {
   updateBlog,
   likeBlog,
   saveBlog,
+  getStats,
 } from "../controller/user-comtroller.js";
 
 const router = express.Router();
@@ -25,6 +26,7 @@ router
 router
   .get("/blogs/:username", getBlogs)
   .get("/blogsById/:id", getBlogsById)
-  .get("/blogs", getBlogsLogout);
+  .get("/blogs", getBlogsLogout)
+  .get("/stats/:username", getStats);
 
 export default router;
