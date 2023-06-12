@@ -12,6 +12,8 @@ import {
   likeBlog,
   saveBlog,
   getStats,
+  unsaveBlog,
+  unlikeBlog,
 } from "../controller/user-comtroller.js";
 
 const router = express.Router();
@@ -22,7 +24,9 @@ router
   .post("/createBlogs", createBlogs)
   .put("/updateBlog", updateBlog)
   .post("/likeBlog", likeBlog)
-  .post("/saveBlog", saveBlog);
+  .post("/saveBlog", saveBlog)
+  .post("/unsaveBlog", unsaveBlog)
+  .post("/unlikeBlog", unlikeBlog);
 router
   .get("/blogs/:username", getBlogs)
   .get("/blogsById/:id", getBlogsById)

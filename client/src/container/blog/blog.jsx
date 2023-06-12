@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import MobileTextEditor from "../../component/editor/mobileEditor";
 import {useSelector} from "react-redux";
-
+import {Button} from "antd";
 const Blog = () => {
   const user = useSelector((state) => state.user);
   const {blogId} = useParams();
@@ -65,13 +65,17 @@ const Blog = () => {
             <div>
               {" "}
               <MobileTextEditor setBlog={setData} blog={data} />
-              <button
+              <Button
+                shape="round"
+                size="large"
+                type="primary"
+                style={{backgroundColor: "#7862F2"}}
                 onClick={() => {
                   updateHandler();
                 }}
               >
-                update
-              </button>
+                Update
+              </Button>
             </div>
           )}
 
@@ -79,7 +83,17 @@ const Blog = () => {
             <div dangerouslySetInnerHTML={{__html: blog.content}}></div>
           )}
           {blog.author === user.username && !edit && (
-            <button onClick={() => toggleEditHandler()}>Edit</button>
+            <Button
+              shape="round"
+              size="large"
+              type="primary"
+              style={{backgroundColor: "#7862F2"}}
+              onClick={() => {
+                toggleEditHandler();
+              }}
+            >
+              Edit
+            </Button>
           )}
         </div>
       )}

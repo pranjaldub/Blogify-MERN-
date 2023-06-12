@@ -21,7 +21,7 @@ import {
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {likeBlog, saveBlog} from "../../service/api";
+import {likeBlog, saveBlog, unsaveBlog, unlikeBlog} from "../../service/api";
 const useStyles = createStyles((theme) => ({
   card: {
     position: "relative",
@@ -63,8 +63,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const BlogCard = ({blog, author, blogId, liked, saved}) => {
-  const [like, setLike] = useState(false);
-  const [save, setSave] = useState(false);
+  const [like, setLike] = useState(liked);
+  const [save, setSave] = useState(saved);
+  //const [unsave, setUnsave] = useState(false);
   const navigate = useNavigate();
   console.log("author", author);
   const user = useSelector((state) => state.user);
@@ -75,11 +76,25 @@ const BlogCard = ({blog, author, blogId, liked, saved}) => {
       setLike(true);
     }
   }
+  async function unlikeHandler() {
+    const obj = {username: user.username, blogId: blogId};
+    const resp = await unlikeBlog(obj);
+    if (resp.isSuccess) {
+      setLike(false);
+    }
+  }
   async function saveHandler() {
     const obj = {username: user.username, blogId: blogId};
     const resp = await saveBlog(obj);
     if (resp.isSuccess) {
       setSave(true);
+    }
+  }
+  async function unsaveHandler() {
+    const obj = {username: user.username, blogId: blogId};
+    const resp = await unsaveBlog(obj);
+    if (resp.isSuccess) {
+      setSave(false);
     }
   }
   // <Card
@@ -157,20 +172,32 @@ const BlogCard = ({blog, author, blogId, liked, saved}) => {
         <Group spacing={8} mr={0}>
           <ActionIcon
             className={classes.action}
-            onClick={user.isLoggedIn ? likeHandler : () => navigate("/login")}
+            onClick={
+              user.isLoggedIn
+                ? !like
+                  ? likeHandler
+                  : unlikeHandler
+                : () => navigate("/login")
+            }
           >
             <IconHeart
               size="1rem"
-              color={like || liked ? theme.colors.red[6] : theme.colors.black}
+              color={like ? theme.colors.red[6] : theme.colors.black}
             />
           </ActionIcon>
           <ActionIcon
             className={classes.action}
-            onClick={user.isLoggedIn ? saveHandler : () => navigate("/login")}
+            onClick={
+              user.isLoggedIn
+                ? !save
+                  ? saveHandler
+                  : unsaveHandler
+                : () => navigate("/login")
+            }
           >
             <IconBookmark
               size="1rem"
-              color={save || saved ? theme.colors.red[6] : theme.colors.black}
+              color={save ? theme.colors.red[6] : theme.colors.black}
             />
           </ActionIcon>
           <ActionIcon className={classes.action}>

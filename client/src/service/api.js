@@ -361,3 +361,67 @@ export const getStats = async (username) => {
     return {isSuccess: false, error: "Response failure , an error has occured"};
   }
 };
+
+export const unsaveBlog = async (obj) => {
+  try {
+    //console.log("sending", credentials);
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        ...obj,
+      }),
+    };
+    //debugger;
+    const response = await fetch(`${baseUrl}/unsaveBlog`, requestOptions);
+    //console.log("incoming", response);
+
+    const resp = await response.json();
+    //console.log("resp ", resp);
+    if (response.status !== 200) {
+      //console.log("inside if");
+      return {
+        isSuccess: false,
+        message: resp.msg,
+      };
+    }
+
+    return {isSuccess: true, message: "unsave successful", data: resp.data};
+  } catch (err) {
+    //throw err;
+    //console.log(err);
+    return {isSuccess: false, error: "Response failure , an error has occured"};
+  }
+};
+
+export const unlikeBlog = async (obj) => {
+  try {
+    //console.log("sending", credentials);
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        ...obj,
+      }),
+    };
+    //debugger;
+    const response = await fetch(`${baseUrl}/unlikeBlog`, requestOptions);
+    //console.log("incoming", response);
+
+    const resp = await response.json();
+    //console.log("resp ", resp);
+    if (response.status !== 200) {
+      //console.log("inside if");
+      return {
+        isSuccess: false,
+        message: resp.msg,
+      };
+    }
+
+    return {isSuccess: true, message: "unlike successful", data: resp.data};
+  } catch (err) {
+    //throw err;
+    //console.log(err);
+    return {isSuccess: false, error: "Response failure , an error has occured"};
+  }
+};

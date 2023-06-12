@@ -310,6 +310,33 @@ export const likeBlog = async (req, res) => {
   }
 };
 
+export const unlikeBlog = async (req, res) => {
+  try {
+    const blog = req.body; //req = {username:"..." , blogId:"..."}
+    //console.log("blog", blog);
+    const foundUser = await UserActivity.findOne({username: blog.username});
+    //user already exists
+
+    //update existing field
+    //foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+    await UserActivity.updateOne(
+      {username: blog.username},
+      {
+        $set: {
+          likedBlogs: [
+            ...foundUser.likedBlogs.filter((id) => id !== blog.blogId),
+          ],
+        },
+      }
+    );
+    const found = await UserActivity.findOne({username: blog.username});
+    return res.status(200).json({msg: "Blog liked", data: found});
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not liked"});
+  }
+};
+
 export const saveBlog = async (req, res) => {
   try {
     const blog = req.body; //req = {username:"..." , blogId:"..."}
@@ -332,6 +359,33 @@ export const saveBlog = async (req, res) => {
   } catch (error) {
     //console.log(error);
     return res.status(500).json({msg: "blog not saved"});
+  }
+};
+
+export const unsaveBlog = async (req, res) => {
+  try {
+    const blog = req.body; //req = {username:"..." , blogId:"..."}
+    //console.log("blog", blog);
+    const foundUser = await UserActivity.findOne({username: blog.username});
+    //user already exists
+
+    //update existing field
+    //foundUser.blogs.push({id: uuidv4(), blog: blog.blog});
+    await UserActivity.updateOne(
+      {username: blog.username},
+      {
+        $set: {
+          savedBlogs: [
+            ...foundUser.savedBlogs.filter((id) => id !== blog.blogId),
+          ],
+        },
+      }
+    );
+    const found = await UserActivity.findOne({username: blog.username});
+    return res.status(200).json({msg: "Blog unsaved", data: found});
+  } catch (error) {
+    //console.log(error);
+    return res.status(500).json({msg: "blog not unsaved"});
   }
 };
 
