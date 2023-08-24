@@ -53,5 +53,5 @@ passport.deserializeUser(async function (username, done) {
     username: username,
   });
 
-  done(err, foundUser);
+  done(null, foundUser);
 });
