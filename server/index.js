@@ -13,8 +13,7 @@ const app = express();
 app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
 
 //using passport for google authentication
-app.use(passport.initialize());
-app.use(passport.session());
+
 app.use(
   cors({
     //origin: "http://localhost:3000",
@@ -34,6 +33,8 @@ app.use(
 app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("/", router);
+app.use(passport.initialize());
+app.use(passport.session());
 dotenv.config({path: "./local.env"});
 //port
 const PORT = 8000;
