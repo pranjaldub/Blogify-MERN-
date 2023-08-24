@@ -43,8 +43,8 @@ passport.use(
   )
 );
 
-passport.serializeUser(function(user, done) {
-  console.log('this gets called logged)
+passport.serializeUser(function (user, done) {
+  console.log("this gets called logged");
   done(null, user.id);
 });
 passport.deserializeUser(async function (id, done) {
