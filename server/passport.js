@@ -43,12 +43,15 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, cb) {
-  console.log("serialize");
-  cb(null, user);
+passport.serializeUser(function(user, done) {
+  console.log('this gets called logged)
+  done(null, user.id);
 });
-
-passport.deserializeUser(function (user, cb) {
-  console.log("deserialize");
-  cb(null, user);
+passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await User.findById(id).exec();
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
