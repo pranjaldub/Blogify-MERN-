@@ -7,6 +7,7 @@ import router from "./routes/route.js";
 import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
 import expressSession from "express-session";
+import session from "client-sessions";
 import passport from "passport";
 import "./passport.js";
 //initializing express app
@@ -14,12 +15,11 @@ const app = express();
 //cookie session 1 day limit
 // app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
 app.use(cookieParser());
-
 app.use(
-  expressSession({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: false,
+  session({
+    cookie: {ephemeral: true},
+    cookieName: "session",
+    secret: "keyboardcat",
   })
 );
 app.use(passport.initialize());
