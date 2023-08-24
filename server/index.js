@@ -5,12 +5,23 @@ import bodyParser from "body-parser";
 import {connectDB} from "./database/db.js";
 import router from "./routes/route.js";
 import cookieSession from "cookie-session";
+import cookieParser from "cookie-parser";
+import expressSession from "express-session";
 import passport from "passport";
 import "./passport.js";
 //initializing express app
 const app = express();
 //cookie session 1 day limit
-app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
+// app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
+app.use(cookieParser());
+
+app.use(
+  expressSession({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
