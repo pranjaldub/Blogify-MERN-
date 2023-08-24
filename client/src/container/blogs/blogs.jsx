@@ -21,7 +21,7 @@ const Blogs = () => {
   const [loading, setLoading] = useState(false);
   const getUser = () => {
     setLoading(true);
-    fetch("http://blogify-backend-zzfj.onrender.com/auth/login/success", {
+    fetch("https://blogify-backend-zzfj.onrender.com/auth/login/success", {
       method: "GET",
       credentials: "include",
       headers: {
