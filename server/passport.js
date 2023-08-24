@@ -45,13 +45,13 @@ passport.use(
 
 passport.serializeUser(function (user, done) {
   console.log("serialize");
-  done(null, user.id);
+  done(null, user.username);
 });
 
-passport.deserializeUser(async function (id, done) {
+passport.deserializeUser(async function (username, done) {
   const foundUser = await User.findOne({
-    username: `${profile.name.givenName}${profile.id}`,
+    username: username,
   });
 
-  done(err, user);
+  done(err, foundUser);
 });
