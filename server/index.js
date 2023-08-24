@@ -9,9 +9,10 @@ import passport from "passport";
 import "./passport.js";
 //initializing express app
 const app = express();
-app.use(passport.initialize());
 //cookie session 1 day limit
 app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //using passport for google authentication
 
@@ -35,7 +36,6 @@ app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("/", router);
 
-app.use(passport.session());
 dotenv.config({path: "./local.env"});
 //port
 const PORT = 8000;

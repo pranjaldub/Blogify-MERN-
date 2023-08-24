@@ -66,12 +66,16 @@ router
   .get("/google", passport.authenticate("google", {scope: ["profile"]}))
   .get(
     "/auth/google/callback",
-    passport.authenticate("google", {
-      //successRedirect: "http://localhost:3000/blogs",
-      successRedirect: "https://blogify-mern-client.vercel.app/blogs",
-      //failureRedirect: "http://localhost:3000/login",
-      failureRedirect: "https://blogify-mern-client.vercel.app/login",
-    })
+    passport.authenticate(
+      "google",
+      {
+        //successRedirect: "http://localhost:3000/blogs",
+        successRedirect: "https://blogify-mern-client.vercel.app/blogs",
+        //failureRedirect: "http://localhost:3000/login",
+        failureRedirect: "https://blogify-mern-client.vercel.app/login",
+      },
+      {session: true}
+    )
   );
 
 export default router;
