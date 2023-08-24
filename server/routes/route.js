@@ -28,6 +28,11 @@ router.get("/auth/login/success", (req, res) => {
       user: req.user,
       //   cookies: req.cookies
     });
+  } else {
+    res.status(400).json({
+      success: false,
+      message: "no success",
+    });
   }
 });
 
