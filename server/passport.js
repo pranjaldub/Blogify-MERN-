@@ -44,14 +44,11 @@ passport.use(
 );
 
 passport.serializeUser(function (user, done) {
-  console.log("this gets called logged");
-  done(null, user.id);
+  console.log("serialize");
+  done(null);
 });
-passport.deserializeUser(async function (id, done) {
-  try {
-    const user = await User.findById(id).exec();
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
+
+passport.deserializeUser(function (user, done) {
+  console.log("Deserialize");
+  done(null);
 });
