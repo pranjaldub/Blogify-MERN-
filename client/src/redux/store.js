@@ -23,3 +23,12 @@ export const store = configureStore({
 
 //export default store;
 export const persistor = persistStore(store);
+
+// const rootReducer = combineReducers({
+//   cart: cartSlice,
+
+// });
+// export const store = configureStore({
+//   reducer: rootReducer,
+
+// });

@@ -3,7 +3,12 @@ import {createSlice} from "@reduxjs/toolkit";
 //slice to initiate login and logout process in global state
 export const userSlice = createSlice({
   name: "user",
-  initialState: {isLoggedIn: false, name: "", username: "", data: {}},
+  initialState: {
+    isLoggedIn: false,
+    name: "",
+    username: "",
+    data: {},
+  },
   reducers: {
     login: (state, action) => {
       const user = {
@@ -15,6 +20,11 @@ export const userSlice = createSlice({
       return user;
     },
     logout: (state) => {
+      window.open(
+        "https://blogify-backend-zzfj.onrender.com/auth/logout",
+        "_self"
+      );
+
       return {...state, isLoggedIn: false, name: "", username: ""};
     },
     loadData: (state, action) => {

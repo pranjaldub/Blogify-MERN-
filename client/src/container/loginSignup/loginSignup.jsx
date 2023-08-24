@@ -16,6 +16,7 @@ import {Result} from "antd";
 import Checkbox from "@mui/material/Checkbox";
 import {signupUser, loginUser} from "../../service/api";
 import {useNavigate} from "react-router-dom";
+import Google from "../../component/Google/Google";
 const LoginSignup = () => {
   const navigate = useNavigate();
   const isDesktopOrLaptop = useMediaQuery({
@@ -29,7 +30,7 @@ const LoginSignup = () => {
   const user = useSelector((state) => state.user);
   console.log("state", user);
   const initialSignupValues = {name: "", username: "", password: ""};
-  const initialLoginValues = {username: "", password: ""};
+  const initialLoginValues = {username: "guest", password: "guest"};
   const [account, toggleAccount] = useState("signup");
   const [signup, setSignup] = useState(initialSignupValues);
   const [signupValues, setSignupValues] = useState(initialSignupValues);
@@ -72,6 +73,7 @@ const LoginSignup = () => {
     account === "signup"
       ? await (async () => {
           data = await signupUser(signupValues);
+          setLoginValues(initialLoginValues);
         })()
       : await (async () => {
           console.log("sending cred", loginValues);
@@ -114,6 +116,10 @@ const LoginSignup = () => {
             }
           });
     }
+  }
+
+  function googleSign() {
+    window.open("http://localhost:8000/google", "_self");
   }
   return (
     <div className={classes.container}>
@@ -171,6 +177,7 @@ const LoginSignup = () => {
                     </InputAdornment>
                   ),
                 }}
+                value={account === "login" ? loginValues.username : ""}
                 variant="outlined"
                 sx={{
                   paddingBottom: 3,
@@ -186,6 +193,7 @@ const LoginSignup = () => {
               <TextField
                 id="input-with-icon-textfield"
                 label="password"
+                value={account === "login" ? loginValues.password : ""}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -246,6 +254,10 @@ const LoginSignup = () => {
               >
                 {account === "login" ? "login" : "Signup"}
               </Button>
+              <span onClick={googleSign}>
+                {" "}
+                <Google>Google</Google>
+              </span>
             </div>
 
             <div className={classes.loginIconContainer}>
@@ -267,7 +279,14 @@ const LoginSignup = () => {
               <div className={classes.footer}>
                 {" "}
                 Dont have an account ?{" "}
-                <span className={classes.registerText}>register here</span>
+                <span
+                  className={classes.registerText}
+                  onClick={() => {
+                    toggleAccount("signup");
+                  }}
+                >
+                  register here
+                </span>
               </div>
             ) : (
               <div className={classes.footer}>

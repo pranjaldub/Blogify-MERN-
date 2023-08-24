@@ -13,28 +13,61 @@ import {Skeleton} from "antd";
 import {DotChartOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {Empty} from "antd";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {login} from "../../features/user/userSlice";
 const Blogs = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
-  const [blogs, setBlogs] = useState([]);
-  const [userData, setUserData] = useState();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const getUser = () => {
+    setLoading(true);
+    fetch("https://blogify-backend-zzfj.onrender.com/auth/login/success", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        throw new Error("authentication has been failed!");
+      })
+      .then((resObject) => {
+        //googleUser = resObject.user;
+        //console.log("fetched user google", resObject);
+        dispatch(
+          login({
+            name: resObject.user.name,
+            username: resObject.user.username,
+          })
+        );
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const [blogs, setBlogs] = useState([]);
+  const [userData, setUserData] = useState({likedBlogs: [], savedBlogs: []});
+
   const [tab, setTab] = useState("Technology");
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isBigScreen = useMediaQuery({query: "(min-width: 1824px)"});
+
   const isMobile = useMediaQuery({query: "(max-width: 768px)"});
-  const isTablet = useMediaQuery({query: "(max-width: 1280px)"});
-  const isPortrait = useMediaQuery({query: "(orientation: portrait)"});
-  const isRetina = useMediaQuery({query: "(min-resolution: 2dppx)"});
+  const user = useSelector((state) => state.user);
+  console.log("user", user);
   async function fetchBlogs() {
     setLoading(true);
 
     const data = user.isLoggedIn
       ? await getBlogs(user.username)
       : await getBlogsLogout();
+    setUserData(data.userData);
     var arr = [];
     data.data.map((item) =>
       arr.push({
@@ -47,12 +80,13 @@ const Blogs = () => {
     console.log("data", arr);
     setBlogs(arr);
     //console.log("user data", data.userData);
-    setUserData(data.userData);
+
     setLoading(false);
+    //console.log("inside fetched blogs", user.isLoggedIn, userData);
   }
   useEffect(() => {
     fetchBlogs();
-  }, [tab]);
+  }, [tab, user.username]);
   return (
     <div className={classes.container}>
       <div className={classes.headingContainer}>
@@ -61,6 +95,26 @@ const Blogs = () => {
       </div>
       <div className={classes.trendingContainer}>
         <MantineProvider withGlobalStyles withNormalizeCSS>
+          {/* {blogs[0]?.blogs.length > 0 && (
+            <BlogCard
+              blog={blogs[0].blogs[0].blog.blog}
+              key={blogs[0].blogs[0].blog.id}
+              author={blogs[0].blogs[0].blog.blog.author}
+              blogId={blogs[0].blogs[0].blog.id}
+              liked={
+                user.isLoggedIn &&
+                userData?.likedBlogs.includes(blogs[1].blogs[1].blog.id)
+                  ? true
+                  : false
+              }
+              saved={
+                user.isLoggedIn &&
+                userData?.savedBlogs.includes(blogs[1].blogs[1].blog.id)
+                  ? true
+                  : false
+              }
+            />
+          )} */}
           <TrendingCard />
         </MantineProvider>
       </div>
@@ -76,6 +130,7 @@ const Blogs = () => {
                   <Skeleton.Node
                     active={true}
                     id={item}
+                    key={item}
                     size="large"
                     style={{width: 250, height: 300}}
                   >
@@ -94,12 +149,14 @@ const Blogs = () => {
                       author={blog.blog.author}
                       blogId={blog.id}
                       liked={
-                        user.isLoggedIn && userData.likedBlogs.includes(blog.id)
+                        user.isLoggedIn &&
+                        userData?.likedBlogs.includes(blog.id)
                           ? true
                           : false
                       }
                       saved={
-                        user.isLoggedIn && userData.savedBlogs.includes(blog.id)
+                        user.isLoggedIn &&
+                        userData?.savedBlogs.includes(blog.id)
                           ? true
                           : false
                       }
@@ -136,13 +193,13 @@ const Blogs = () => {
                           author={blog.blog.author}
                           liked={
                             user.isLoggedIn &&
-                            userData.likedBlogs.includes(blog.id)
+                            userData?.likedBlogs.includes(blog.id)
                               ? true
                               : false
                           }
                           saved={
                             user.isLoggedIn &&
-                            userData.savedBlogs.includes(blog.id)
+                            userData?.savedBlogs.includes(blog.id)
                               ? true
                               : false
                           }

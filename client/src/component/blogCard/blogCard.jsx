@@ -63,6 +63,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const BlogCard = ({blog, author, blogId, liked, saved}) => {
+  console.log("inside card", blogId, liked, saved);
   const [like, setLike] = useState(liked);
   const [save, setSave] = useState(saved);
   //const [unsave, setUnsave] = useState(false);
@@ -97,41 +98,12 @@ const BlogCard = ({blog, author, blogId, liked, saved}) => {
       setSave(false);
     }
   }
-  // <Card
-  //   hoverable
-  //   style={{
-  //     width: 300,
-  //     height: 400,
-  //     borderRadius: 10,
-  //     backgroundColor: "transparent",
-  //     textOverflow: "ellipses",
-  //   }}
-  //   cover={
-  //     <img
-  //       alt="example"
-  //       src="https://images.unsplash.com/photo-1637317957434-16798e804fdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1443&q=80"
-  //       style={{borderRadius: 15}}
-  //     />
-  //   }
-  //   actions={[
-  //     <SettingOutlined key="like" />,
-  //     <EditOutlined key="share" />,
-  //     <EllipsisOutlined key="ellipsis" />,
-  //   ]}
-  // >
-  //   <Meta
-  //     title="The effect of AI on non technical sector"
-  //     description={blogText}
-  //     style={{textOverflow: "ellipses"}}
-  //   />
-  // </Card>
+
   const {classes, cx, theme} = useStyles();
   // const linkProps = {href: link, target: "_blank", rel: "noopener noreferrer"};
   const image =
     "https://images.unsplash.com/photo-1637317957434-16798e804fdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1443&q=80";
-  const title = "The Growth of AI and not technical sector";
-  const description =
-    "Write great English with the ultimate tool for writing, in your favorite websites such as Facebook, Gmail, LinkedIn and more. While you're typing, a small Ginger logo will appear at the bottom right corner of your text fields. This tool will take care of all your writing needs.";
+
   return (
     <Card withBorder radius="lg" className={cx(classes.card)}>
       <Card.Section>
@@ -139,14 +111,6 @@ const BlogCard = ({blog, author, blogId, liked, saved}) => {
           <Image src={image} height={180} />
         </a>
       </Card.Section>
-
-      {/* <Badge
-        className={classes.rating}
-        variant="gradient"
-        gradient={{from: "yellow", to: "red"}}
-      >
-        {rating}
-      </Badge> */}
 
       <Text
         className={classes.title}
@@ -182,7 +146,7 @@ const BlogCard = ({blog, author, blogId, liked, saved}) => {
           >
             <IconHeart
               size="1rem"
-              color={like ? theme.colors.red[6] : theme.colors.black}
+              color={like || liked ? theme.colors.red[6] : theme.colors.black}
             />
           </ActionIcon>
           <ActionIcon
@@ -197,7 +161,7 @@ const BlogCard = ({blog, author, blogId, liked, saved}) => {
           >
             <IconBookmark
               size="1rem"
-              color={save ? theme.colors.red[6] : theme.colors.black}
+              color={save || saved ? theme.colors.red[6] : theme.colors.black}
             />
           </ActionIcon>
           <ActionIcon className={classes.action}>
