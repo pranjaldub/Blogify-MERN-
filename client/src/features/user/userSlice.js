@@ -21,7 +21,7 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       window.open(
-        "https://blogify-backend-zzfj.onrender.com/auth/logout",
+        "http://blogify-backend-zzfj.onrender.com/auth/logout",
         "_self"
       );
 
