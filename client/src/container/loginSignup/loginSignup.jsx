@@ -119,7 +119,7 @@ const LoginSignup = () => {
   }
 
   function googleSign() {
-    window.open("http://localhost:8000/google", "_self");
+    window.open("https://blogify-backend-zzfj.onrender.com/google", "_self");
   }
   return (
     <div className={classes.container}>
