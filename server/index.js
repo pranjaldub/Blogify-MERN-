@@ -15,13 +15,14 @@ const app = express();
 //cookie session 1 day limit
 // app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
 app.use(cookieParser());
-app.use(
-  session({
-    cookie: {ephemeral: true},
-    cookieName: "session",
-    secret: "keyboardcat",
-  })
-);
+// app.use(
+//   session({
+//     cookie: {ephemeral: true},
+//     cookieName: "session",
+//     secret: "keyboardcat",
+//   })
+// );
+app.use(expressSession({secret: "super secret"}));
 app.use(passport.initialize());
 app.use(passport.session());
 
