@@ -71,12 +71,18 @@ router
   .get("/google", passport.authenticate("google", {scope: ["profile"]}))
   .get(
     "/auth/google/callback",
-    passport.authenticate("google", {
-      //successRedirect: "http://localhost:3000/blogs",
-      successRedirect: `${baseURL}blogs`,
-      //failureRedirect: "http://localhost:3000/login",
-      failureRedirect: `${baseURL}login`,
-    })
+    passport.authenticate(
+      "google",
+      {
+        //successRedirect: "http://localhost:3000/blogs",
+        successRedirect: `${baseURL}blogs`,
+        //failureRedirect: "http://localhost:3000/login",
+        failureRedirect: `${baseURL}login`,
+      },
+      (req, res) => {
+        req.session.user = req.user;
+      }
+    )
   );
 
 export default router;
