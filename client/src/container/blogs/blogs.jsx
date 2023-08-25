@@ -27,7 +27,8 @@ const Blogs = () => {
         : "https://blogify-backend-zzfj.onrender.com/auth/login/success",
       {
         method: "GET",
-        credentials: "include",
+        //credentials: "include",
+        credentials: "same-origin",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

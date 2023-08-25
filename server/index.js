@@ -22,7 +22,14 @@ app.use(cookieParser());
 //     secret: "keyboardcat",
 //   })
 // );
-app.use(expressSession({secret: "super secret"}));
+app.use(
+  expressSession({
+    secret: "super secret",
+    cookie: {
+      secure: true,
+    },
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
