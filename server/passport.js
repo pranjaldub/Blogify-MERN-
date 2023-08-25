@@ -14,7 +14,7 @@ passport.use(
       callbackURL:
         process.env.ENVIRONMENT === "Development"
           ? "/auth/google/callback"
-          : "http://blogify-backend-zzfj.onrender.com/auth/google/callback",
+          : "https://blogify-backend-zzfj.onrender.com/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
       //console.log("printing", profile);
