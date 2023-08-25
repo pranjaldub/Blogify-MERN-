@@ -30,7 +30,10 @@ app.use(passport.session());
 app.use(
   cors({
     //origin: "http://localhost:3000",
-    origin: "https://blogify-mern-client.vercel.app",
+    origin:
+      process.env.ENVIRONMENT === "Development"
+        ? "http://localhost:3000"
+        : "https://blogify-mern-client.vercel.app",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })

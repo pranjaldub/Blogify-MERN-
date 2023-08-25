@@ -73,9 +73,9 @@ router
     "/auth/google/callback",
     passport.authenticate("google", {
       //successRedirect: "http://localhost:3000/blogs",
-      successRedirect: `${baseURL}/blogs`,
+      successRedirect: `${baseURL}blogs`,
       //failureRedirect: "http://localhost:3000/login",
-      failureRedirect: `${baseURL}/login`,
+      failureRedirect: `${baseURL}login`,
     })
   );
 

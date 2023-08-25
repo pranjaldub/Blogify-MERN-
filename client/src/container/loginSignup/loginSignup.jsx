@@ -29,6 +29,7 @@ const LoginSignup = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log("state", user);
+  console.log("env", process.env.REACT_APP_ENVIRONMENT === "Development");
   const initialSignupValues = {name: "", username: "", password: ""};
   const initialLoginValues = {username: "guest", password: "guest"};
   const [account, toggleAccount] = useState("signup");
