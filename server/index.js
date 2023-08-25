@@ -15,13 +15,9 @@ const app = express();
 //cookie session 1 day limit
 // app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
 app.use(cookieParser());
-app.set("trust proxy", true);
 app.use(
   session({
-    cookie: {
-      httpOnly: true,
-      secure: true,
-    },
+    cookie: {ephemeral: true, secureProxy: true},
     cookieName: "session",
     secret: "keyboardcat",
   })
