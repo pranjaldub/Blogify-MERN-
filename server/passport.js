@@ -51,9 +51,10 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(async function (username, done) {
+  console.log("Deserialize");
   const foundUser = await User.findOne({
     username: username,
   });
-
+  console.log("Deserialized user", foundUser);
   done(null, foundUser);
 });
