@@ -17,7 +17,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   session({
-    cookie: {ephemeral: true, secureProxy: true},
+    cookie: {ephemeral: true, secure: true, secureProxy: true},
     cookieName: "session",
     secret: "keyboardcat",
   })
