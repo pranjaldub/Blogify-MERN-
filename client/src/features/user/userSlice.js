@@ -21,7 +21,9 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       window.open(
-        "https://blogify-backend-zzfj.onrender.com/auth/logout",
+        process.env.REACT_APP_ENVIRONMENT === "Development"
+          ? "http://localhost:8000/auth/logout"
+          : "https://blogify-backend-zzfj.onrender.com/auth/logout",
         "_self"
       );
 

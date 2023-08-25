@@ -1,6 +1,7 @@
 // here we specify the enpoints of API urls
 
 import express from "express";
+import dotenv from "dotenv";
 import "../passport.js";
 import {
   signupUser,
@@ -19,7 +20,7 @@ import {
 import passport from "passport";
 import "../passport.js";
 const router = express.Router();
-
+dotenv.config({path: "./local.env"});
 router.get("/auth/login/success", (req, res) => {
   console.log("in route", req.user);
   if (req.user) {
@@ -44,9 +45,13 @@ router.get("/login/failed", (req, res) => {
   });
 });
 
+const baseURL =
+  process.env.ENVIRONMENT === "Development"
+    ? "http://localhost:3000/"
+    : "https://blogify-mern-client.vercel.app/";
 router.get("/auth/logout", (req, res) => {
   req.logout();
-  res.redirect("https://blogify-mern-client.vercel.app/");
+  res.redirect(baseURL);
 });
 
 router
@@ -68,9 +73,9 @@ router
     "/auth/google/callback",
     passport.authenticate("google", {
       //successRedirect: "http://localhost:3000/blogs",
-      successRedirect: "https://blogify-mern-client.vercel.app/blogs",
+      successRedirect: `${baseURL}/blogs`,
       //failureRedirect: "http://localhost:3000/login",
-      failureRedirect: "https://blogify-mern-client.vercel.app/login",
+      failureRedirect: `${baseURL}/login`,
     })
   );
 

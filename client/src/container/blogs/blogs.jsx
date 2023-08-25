@@ -21,15 +21,20 @@ const Blogs = () => {
   const [loading, setLoading] = useState(false);
   const getUser = () => {
     setLoading(true);
-    fetch("https://blogify-backend-zzfj.onrender.com/auth/login/success", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-    })
+    fetch(
+      process.env.REACT_APP_ENVIRONMENT === "Development"
+        ? "http://localhost:8000/auth/login/success"
+        : "https://blogify-backend-zzfj.onrender.com/auth/login/success",
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         throw new Error("authentication has been failed!");

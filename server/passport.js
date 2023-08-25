@@ -12,7 +12,9 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:
-        "http://blogify-backend-zzfj.onrender.com/auth/google/callback",
+        process.env.ENVIRONMENT === "Development"
+          ? "/auth/google/callback"
+          : "http://blogify-backend-zzfj.onrender.com/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
       //console.log("printing", profile);

@@ -119,7 +119,12 @@ const LoginSignup = () => {
   }
 
   function googleSign() {
-    window.open("https://blogify-backend-zzfj.onrender.com/google", "_self");
+    window.open(
+      process.env.REACT_APP_ENVIRONMENT === "Development"
+        ? "http://localhost:8000/google"
+        : "https://blogify-backend-zzfj.onrender.com/google",
+      "_self"
+    );
   }
   return (
     <div className={classes.container}>
