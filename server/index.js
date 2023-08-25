@@ -6,8 +6,8 @@ import {connectDB} from "./database/db.js";
 import router from "./routes/route.js";
 import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
-import expressSession from "express-session";
-import session from "client-sessions";
+import sessions from "express-session";
+//import session from "client-sessions";
 import passport from "passport";
 import "./passport.js";
 //initializing express app
@@ -15,21 +15,22 @@ const app = express();
 //cookie session 1 day limit
 // app.use(cookieSession({name: "pd", keys: ["one"], maxAge: 24 * 60 * 60 * 100}));
 app.use(cookieParser());
-app.use(
-  session({
-    cookie: {ephemeral: true, secure: true, secureProxy: true},
-    cookieName: "session",
-    secret: "keyboardcat",
-  })
-);
 // app.use(
-//   expressSession({
-//     secret: "super secret",
-//     cookie: {
-//       secure: true,
-//     },
+//   session({
+//     cookie: {ephemeral: true, secure: true, secureProxy: true},
+//     cookieName: "session",
+//     secret: "keyboardcat",
 //   })
 // );
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(
+  sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized: true,
+    cookie: {maxAge: oneDay, secure: true},
+    resave: false,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
